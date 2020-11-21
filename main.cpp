@@ -6,6 +6,8 @@
 
 using namespace std;
 
+//Andrea subio su codigo yay!
+
 struct cliente
 {
     string nombre;
