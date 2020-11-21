@@ -28,7 +28,7 @@ list<Data>* adj; //Puntero al arreglo de la lista de adyacencia
 void agregarBorde(Nodo n[], int v);
 void imprimirTodosLosCaminos(int s, int d);
 void buscarCaminos(int, int, bool[], int[], int&); 
-void comenzarBusqueda(int s, int d);
+int comenzarBusqueda(int s, int d);
 
 int comenzarBusqueda(int s, int d)
 {
