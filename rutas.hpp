@@ -5,6 +5,7 @@
 #include <iostream>
 #include <list>
 #include <queue>
+#include <string>
 
 using namespace std;
 
@@ -40,8 +41,6 @@ struct Data
     int fin;
     int peso;
 };
-
-
 
 destino ciudades[60] = {
         {"San Salvador",        "El Salvador",            "América"},
@@ -236,6 +235,7 @@ list<Data>* adj; //Puntero al arreglo de la lista de adyacencia
 void agregarBorde(Nodo n[], int v);
 void imprimirTodosLosCaminos(int s, int d);
 void buscarCaminos(int, int, bool[], int[], int&, ruta*); 
+string retornarRuta(string ruta[]);
 int comenzarBusqueda(int s, int d);
 void imprimirMejorRuta();
 
