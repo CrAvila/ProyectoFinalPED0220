@@ -76,7 +76,7 @@ int main()
         
     } while (stop);
 
-    ciudades[unPasajero.rutaVuelo.pares.front().destino].ciudad;
+    ciudades[unPasajero[0].rutaVuelo.pares.front().destino].ciudad;
 
     return 0;
 }
