@@ -10,7 +10,7 @@ using namespace std;
 struct Cliente{
     string nombre;
     int edad;
-    char discapsitado;
+    char discapacidad;
     string destino;
 
 };
