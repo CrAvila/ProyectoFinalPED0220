@@ -1,7 +1,7 @@
 //funcion de abordaje
 #pragma once
 #include <iostream>
-#include <list>
+#include <vector>
 #include <queue>
 
 using namespace std;
@@ -23,12 +23,12 @@ enum destino{EEUU, Canada, Colombia};
 queue <cliente> normal;
 queue <cliente> prioritario;
 
-void menu (list <cliente>,list <cliente>);
-void Elegir_destino(list <cliente>, list <cliente>);
+void Menu_abordaje (vector <cliente>,vector <cliente>);
+void Elegir_destino(vector <cliente>, vector <cliente>);
 void Abordar_pasajeros();
-void Abordaje_destino(destino, list <cliente>, list <cliente>);
+void Abordaje_destino(destino, vector <cliente>, vector <cliente>);
 
-void menu(list <cliente> pasajeros, list <cliente> pasajerosDiscapacitados){
+void Menu_abordaje(vector <cliente> pasajeros, vector <cliente> pasajerosDiscapacitados){
     bool s=true;
     int opcion;
     //Menu de opciones principales
@@ -46,7 +46,7 @@ void menu(list <cliente> pasajeros, list <cliente> pasajerosDiscapacitados){
     } while (s);
 }
 //Funciones ejecutadas directamente por el menu 
-void Elegir_destino(list <cliente> pasajeros , list <cliente> pasajerosDiscapacitados){
+void Elegir_destino(vector <cliente> pasajeros , vector <cliente> pasajerosDiscapacitados){
     destino vuelo;
     bool s=true;
     int pais;
@@ -71,11 +71,11 @@ void Elegir_destino(list <cliente> pasajeros , list <cliente> pasajerosDiscapaci
 }
 
 void Abordar_pasajeros(){
-    if (normal.empty() || prioritario.empty()){ //nos aseguramos que las colas no esten vacias 
+    if (normal.empty() && prioritario.empty()){ //nos aseguramos que las colas no esten vacias 
     cout<<"\nNo hay pasajeros para este destino\n\n";
     }
     //Mostramos la cola de pasajeros prioritarios
-    if (!prioritario.empty()){
+    else if (!prioritario.empty() && !normal.empty()){
         cout<<"========== Pasajeros prioritarios =========="<<endl<<endl;
         while (!prioritario.empty()){
             cliente siguiente_abordar = prioritario.front();
@@ -86,9 +86,7 @@ void Abordar_pasajeros(){
             //Procedemos a abordarlos despejando la cola
             prioritario.pop();
         }
-    }
     //Repetimos el proceso anterios pero ahora con la cola de no prioritarios
-    if (!normal.empty()){
         cout<<"========== Pasajeros corrientes =========="<<endl<<endl;
         while (!normal.empty()){
             cliente siguiente_abordar = normal.front();
@@ -102,22 +100,22 @@ void Abordar_pasajeros(){
     }
 }
 //Funcion secundaria
-void Abordaje_destino(destino v, list <cliente> pasajeros , list <cliente> pasajerosDiscapacitados){
+void Abordaje_destino(destino v, vector <cliente> pasajeros , vector <cliente> pasajerosDiscapacitados){
     string d;
     switch (v){
         case EEUU: d = "EEUU"; break;
         case Canada: d = "Canada"; break;
         case Colombia: d = "Colombia"; break;
     }
-    if (!prioritario.empty() || !normal.empty()){ //Condicion para que no se pueda tener dos destinos en una misma cola
+    if (!prioritario.empty() && !normal.empty()){ //Condicion para que no se pueda tener dos destinos en una misma cola
         cout<<"\nLa cola de abordaje esta llena.\nIngresa a los pasajeros a su vuelo antes de elegir un nuevo destino\n\n";
     }
-    if (pasajeros.empty() || pasajerosDiscapacitados.empty()){ //nos aseguramos que hayan registros de clientes
+    else if (pasajeros.empty() && pasajerosDiscapacitados.empty()){ //nos aseguramos que hayan registros de clientes
         cout<<"\nNo hay registros de clientes\n\n";
     }
     else{ //Si hay clientes en el registro procedemos a pasarlos a la cola de abordaje
         if (!pasajeros.empty()){ //evaluamos primero los pasajeros no prioritarios
-            for (list<cliente>::iterator i = pasajeros.begin(); i != pasajeros.end(); ) //creamos un iterador para recorrer la lista 
+            for (vector<cliente>::iterator i = pasajeros.begin(); i != pasajeros.end(); ) //creamos un iterador para recorrer la lista 
             {                                                                           
                 if (i->destino == d){ //este se detendra al encontrar un elemento con la condicion establecida
                     normal.push(*i); //añadira el elemento a nuestra cola
@@ -128,7 +126,7 @@ void Abordaje_destino(destino v, list <cliente> pasajeros , list <cliente> pasaj
             }
         } //se repite el proceso anterior con la lista de discapacitados para pasarlos a la cola prioritaria
         if (!pasajerosDiscapacitados.empty()){
-            for (list<cliente>::iterator i = pasajerosDiscapacitados.begin(); i != pasajerosDiscapacitados.end(); )
+            for (vector<cliente>::iterator i = pasajerosDiscapacitados.begin(); i != pasajerosDiscapacitados.end(); )
             {
                 if (i->destino == d){
                     prioritario.push(*i);
