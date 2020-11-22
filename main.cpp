@@ -57,7 +57,6 @@ int main()
         {
             case 1:
                 clientes();
-                
             break;
             case 2:
                 ganancias();
@@ -75,8 +74,6 @@ int main()
         }
         
     } while (stop);
-
-    ciudades[unPasajero[0].rutaVuelo.pares.front().destino].ciudad;
 
     return 0;
 }
@@ -137,7 +134,10 @@ void clientes()
         if (unPasajero.discapacidad=='s' || unPasajero.edad>65) //validacion de lista de pertenencia
         {
             pasajerosDiscapacitados.push_back(unPasajero); //cola pasajeros discapacitados y adultos mayores
-        } else listaPasajeros.push_back(unPasajero); //cola pasajeros 
+        } else 
+        {
+            listaPasajeros.push_back(unPasajero); //cola pasajeros
+        } 
         cont++;
 
     }
