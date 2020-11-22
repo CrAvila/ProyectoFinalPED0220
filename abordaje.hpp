@@ -7,21 +7,22 @@
 
 using namespace std;
 
-//informacion de cada pasajero 
+/*informacion de cada pasajero 
+Struct que debe ser retirado del main.cpp*/
 struct cliente{
     string nombre;
     int edad;
     char discapacidad;
     ruta rutaVuelo;
 };
-
+//nuevo struc para las colas de las puertas, que contienen solo los datos de interes para el abordaje
 struct pasajero{
     string nombre;
     int edad;
     string destino;
 };
 
-//Una cola de de pasajeros corrientes y una de pasajeros prioritarios 
+//Una cola de pasajeros corrientes y una de pasajeros prioritarios 
 queue <pasajero> normal;
 queue <pasajero> prioritario;
 
@@ -49,24 +50,28 @@ void Menu_abordaje(vector <cliente> pasajeros, vector <cliente> pasajerosDiscapa
 }
 //Funciones ejecutadas directamente por el menu 
 void Elegir_destino(vector <cliente> pasajeros , vector <cliente> pasajerosDiscapacitados){
-    cliente uncl;
+    cliente uncl;//un cliente
     int n = 1;//contador
-    ruta d;
-    string ds;
-    ds = ciudades[pasajeros.front().rutaVuelo.pares.front().destino].ciudad;
+    string ds;//variable donde se guardara el nombre del destino
+    
+    ds = ciudades[pasajeros.front().rutaVuelo.pares.front().destino].ciudad; //asignando el destino del primer nodo
+    
     cout<<endl<<"++++++++++ CODIGOS DE PAISES +++++++++"<<endl;
-
+    //Se imprime la primera puerta
     cout<<"Puerta "<<n<<" con destino a "<<ds<<endl;
-
+    
+    /*recorremos la lista comparando los destinos para sacar solo los destinos existentes
+    si estos destinos son diferentes al anterior se imprime como una puerta nueva*/
     for (auto i = 0; i < pasajeros.size(); i++) {
         uncl = pasajeros[i];
         ds = ciudades[uncl.rutaVuelo.pares.front().destino].ciudad;
         cout<<"Puerta "<<n++<<" con destino a "<<ds<<endl;
     }
 
+    //debe ingresar uno de los destinos previamente mostrados
     cout<<endl<<"Ingrese el destino del vuelo:"<<endl;
     getline(cin,ds);
-    Abordaje_destino(ds, pasajeros, pasajerosDiscapacitados);
+    Abordaje_destino(ds, pasajeros, pasajerosDiscapacitados);//pasa el destino y las listas a la funcion 
 }
 
 
@@ -101,7 +106,8 @@ void Abordar_pasajeros(){
 }
 //Funcion secundaria
 void Abordaje_destino(string ds, vector <cliente> pasajeros , vector <cliente> pasajerosDiscapacitados,ruta rutaCliente){
-    pasajero unp;
+    pasajero unp; // un pasajero
+
     if (!prioritario.empty() && !normal.empty()){ //Condicion para que no se pueda tener dos destinos en una misma cola
         cout<<"\nLa cola de abordaje esta llena.\nIngresa a los pasajeros a su vuelo antes de elegir un nuevo destino\n\n";
     }
@@ -113,11 +119,10 @@ void Abordaje_destino(string ds, vector <cliente> pasajeros , vector <cliente> p
             for (vector<cliente>::iterator i = pasajeros.begin(); i != pasajeros.end(); ) //creamos un iterador para recorrer la lista 
             {                                                                           
                 if (ciudades[i->rutaVuelo.pares.front().destino].ciudad == ds){ //este se detendra al encontrar un elemento con la condicion establecida
-                    normal.push(unp); //añadira el elemento a nuestra cola
-                    unp.nombre = i->nombre;
-                    unp.edad = i->edad;
+                    unp.nombre = i->nombre;     //llenamos los datos de "un pasajero"...
+                    unp.edad = i->edad;         //...solo con la informacion que nos interesa 
                     unp.destino = ds;
-                    prioritario.push(unp);
+                    normal.push(unp); //añadira el elemento a nuestra cola
                     i =  pasajeros.erase(i); //se elimina el nodo               
                 }
                 else
