@@ -3,30 +3,32 @@
 #include <iostream>
 #include <vector>
 #include <queue>
+#include "rutas.hpp"
 
 using namespace std;
 
 //informacion de cada pasajero 
-struct Cliente{
+struct cliente{
     string nombre;
     int edad;
     char discapacidad;
-    string destino;
-
+    ruta rutaVuelo;
 };
-typedef struct Cliente cliente;
 
-//Enumerar los destinos posibles 
-enum destino{EEUU, Canada, Colombia};
+struct pasajero{
+    string nombre;
+    int edad;
+    string destino;
+};
 
 //Una cola de de pasajeros corrientes y una de pasajeros prioritarios 
-queue <cliente> normal;
-queue <cliente> prioritario;
+queue <pasajero> normal;
+queue <pasajero> prioritario;
 
 void Menu_abordaje (vector <cliente>,vector <cliente>);
 void Elegir_destino(vector <cliente>, vector <cliente>);
 void Abordar_pasajeros();
-void Abordaje_destino(destino, vector <cliente>, vector <cliente>);
+void Abordaje_destino(string, vector <cliente>, vector <cliente>);
 
 void Menu_abordaje(vector <cliente> pasajeros, vector <cliente> pasajerosDiscapacitados){
     bool s=true;
@@ -47,28 +49,26 @@ void Menu_abordaje(vector <cliente> pasajeros, vector <cliente> pasajerosDiscapa
 }
 //Funciones ejecutadas directamente por el menu 
 void Elegir_destino(vector <cliente> pasajeros , vector <cliente> pasajerosDiscapacitados){
-    destino vuelo;
-    bool s=true;
-    int pais;
-    do{ //desplegamos otro menu para que el usuario escoja el destino del vuelo
-        cout<<endl<<"++++++++++ CODIGOS DE PAISES +++++++++"<<endl;
-        cout<<"1.EEUU\n"<<"2.Canada\n"<<"3.Colombia\n"<<"4.Salir\n";
-        cout<<endl<<"Ingrese el destino del vuelo:"<<endl;
-        cin>>pais;cin.ignore();
-        
-        switch (pais){
-            case 1: vuelo = EEUU; break;
-            case 2: vuelo = Canada; break;
-            case 3: vuelo = Colombia; break;
-            case 4: s = false; break;
-            default:
-                cout<<"Opcion no valida. Intente nuevamente.";
-            break;
-        }
-        Abordaje_destino(vuelo, pasajeros, pasajerosDiscapacitados);
-        s = false;
-    } while (s);
+    cliente uncl;
+    int n = 1;//contador
+    ruta d;
+    string ds;
+    ds = ciudades[pasajeros.front().rutaVuelo.pares.front().destino].ciudad;
+    cout<<endl<<"++++++++++ CODIGOS DE PAISES +++++++++"<<endl;
+
+    cout<<"Puerta "<<n<<" con destino a "<<ds<<endl;
+
+    for (auto i = 0; i < pasajeros.size(); i++) {
+        uncl = pasajeros[i];
+        ds = ciudades[uncl.rutaVuelo.pares.front().destino].ciudad;
+        cout<<"Puerta "<<n++<<" con destino a "<<ds<<endl;
+    }
+
+    cout<<endl<<"Ingrese el destino del vuelo:"<<endl;
+    getline(cin,ds);
+    Abordaje_destino(ds, pasajeros, pasajerosDiscapacitados);
 }
+
 
 void Abordar_pasajeros(){
     if (normal.empty() && prioritario.empty()){ //nos aseguramos que las colas no esten vacias 
@@ -78,7 +78,7 @@ void Abordar_pasajeros(){
     else if (!prioritario.empty() && !normal.empty()){
         cout<<"========== Pasajeros prioritarios =========="<<endl<<endl;
         while (!prioritario.empty()){
-            cliente siguiente_abordar = prioritario.front();
+            pasajero siguiente_abordar = prioritario.front();
             //mostramos sus datos en consola
             cout<<"Nombre: "<<siguiente_abordar.nombre<<endl;
             cout<<"Edad: "<<siguiente_abordar.edad<<endl;
@@ -89,7 +89,7 @@ void Abordar_pasajeros(){
     //Repetimos el proceso anterios pero ahora con la cola de no prioritarios
         cout<<"========== Pasajeros corrientes =========="<<endl<<endl;
         while (!normal.empty()){
-            cliente siguiente_abordar = normal.front();
+            pasajero siguiente_abordar = normal.front();
             
             cout<<"Nombre: "<<siguiente_abordar.nombre<<endl;
             cout<<"Edad: "<<siguiente_abordar.edad<<endl;
@@ -100,13 +100,8 @@ void Abordar_pasajeros(){
     }
 }
 //Funcion secundaria
-void Abordaje_destino(destino v, vector <cliente> pasajeros , vector <cliente> pasajerosDiscapacitados){
-    string d;
-    switch (v){
-        case EEUU: d = "EEUU"; break;
-        case Canada: d = "Canada"; break;
-        case Colombia: d = "Colombia"; break;
-    }
+void Abordaje_destino(string ds, vector <cliente> pasajeros , vector <cliente> pasajerosDiscapacitados,ruta rutaCliente){
+    pasajero unp;
     if (!prioritario.empty() && !normal.empty()){ //Condicion para que no se pueda tener dos destinos en una misma cola
         cout<<"\nLa cola de abordaje esta llena.\nIngresa a los pasajeros a su vuelo antes de elegir un nuevo destino\n\n";
     }
@@ -117,8 +112,12 @@ void Abordaje_destino(destino v, vector <cliente> pasajeros , vector <cliente> p
         if (!pasajeros.empty()){ //evaluamos primero los pasajeros no prioritarios
             for (vector<cliente>::iterator i = pasajeros.begin(); i != pasajeros.end(); ) //creamos un iterador para recorrer la lista 
             {                                                                           
-                if (i->destino == d){ //este se detendra al encontrar un elemento con la condicion establecida
-                    normal.push(*i); //añadira el elemento a nuestra cola
+                if (ciudades[i->rutaVuelo.pares.front().destino].ciudad == ds){ //este se detendra al encontrar un elemento con la condicion establecida
+                    normal.push(unp); //añadira el elemento a nuestra cola
+                    unp.nombre = i->nombre;
+                    unp.edad = i->edad;
+                    unp.destino = ds;
+                    prioritario.push(unp);
                     i =  pasajeros.erase(i); //se elimina el nodo               
                 }
                 else
@@ -128,8 +127,11 @@ void Abordaje_destino(destino v, vector <cliente> pasajeros , vector <cliente> p
         if (!pasajerosDiscapacitados.empty()){
             for (vector<cliente>::iterator i = pasajerosDiscapacitados.begin(); i != pasajerosDiscapacitados.end(); )
             {
-                if (i->destino == d){
-                    prioritario.push(*i);
+                if (ciudades[i->rutaVuelo.pares.front().destino].ciudad == ds){
+                    unp.nombre = i->nombre;
+                    unp.edad = i->edad;
+                    unp.destino = ds;
+                    prioritario.push(unp);
                     i =  pasajerosDiscapacitados.erase(i);               
                 }
                 else
@@ -137,6 +139,6 @@ void Abordaje_destino(destino v, vector <cliente> pasajeros , vector <cliente> p
             }
         }
         //mostramos un mensaje si todo es correcto
-        cout<<"\nEl destino "<<d<<" ha sido elegido satisfactoriamente\n\n";
+        cout<<"\nEl destino "<<ds<<" ha sido elegido satisfactoriamente\n\n";
     }
 }

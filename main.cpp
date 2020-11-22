@@ -62,7 +62,7 @@ int main()
                 ganancias();
             break;
             case 3:
-                //menu(listaPasajeros, pasajerosDiscapacitados);
+                //Menu_abordaje(listaPasajeros, pasajerosDiscapacitados);
             break;
             case 4:
                 stop=false;
