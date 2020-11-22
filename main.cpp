@@ -148,31 +148,21 @@ void clientes()
 
 int despliegueDestinos(){
     int opt = 0;
-    vector<string> paises;
-    vector<string> ciudadesDisponibles;
-    int counter = 0;
-    int optPais = 0;
-    int optFinal = 0;
-    int numDestino = 0;
-    string pais;
-    string ciudad;
+    vector<string> paises, ciudadesDisponibles;
+    int counter = 0, optPais = 0, optFinal = 0, numDestino = 0;
+    string pais, ciudad;
 
-
-    for(int i = 0; i < 5; i++){
-        cout << i+1 << "] " << continentes[i] << endl;
-    }
+    for(int i = 0; i < 5; i++) cout << i+1 << "] " << continentes[i] << endl;
     
     cout << endl << "Ingrese el numero del continente al que desea visitar: ";
     cin >> opt;
     string continente = continentes[opt-1];
     cout << endl << "Países disponibles en " << continente << ": " << endl << endl;
 
-
     for(int i = 1; i < 60; i++){
-        if(ciudades[i].continente == continente){
-            paises.push_back(ciudades[i].pais);
-        }
+        if(ciudades[i].continente == continente)paises.push_back(ciudades[i].pais);
     }
+
     sort(paises.begin(), paises.end(), compNombres);
     paises.erase(unique(paises.begin(), paises.end()), paises.end());
 
@@ -193,9 +183,7 @@ int despliegueDestinos(){
     
     counter = 0;
     for(int i = 1; i < 60; i++){
-        if(ciudades[i].pais == pais){
-            ciudadesDisponibles.push_back(ciudades[i].ciudad);
-        }
+        if(ciudades[i].pais == pais) ciudadesDisponibles.push_back(ciudades[i].ciudad);
     }
 
     sort(ciudadesDisponibles.begin(), ciudadesDisponibles.end(), compNombres);
@@ -209,9 +197,8 @@ int despliegueDestinos(){
     
     cout << endl;
     cout << "Ciudades disponibles en " << pais << ": " << endl;
-    
-        cout << "Ingrese el numero de la ciudad que desea visitar: ";
-        cin >> optFinal;
+    cout << "Ingrese el numero de la ciudad que desea visitar: ";
+    cin >> optFinal;
 
     counter = 0;
     for(vector<string>::iterator it=ciudadesDisponibles.begin(); it!=ciudadesDisponibles.end(); it++){
