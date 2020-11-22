@@ -75,8 +75,10 @@ int main()
         }
         
     } while (stop);
-    return 0;
 
+    ciudades[unPasajero.rutaVuelo.pares.front().destino].ciudad;
+
+    return 0;
 }
 
 void clientes()
