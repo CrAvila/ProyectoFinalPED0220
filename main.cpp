@@ -147,69 +147,89 @@ void clientes()
 }
 
 int despliegueDestinos(){
+    //Se declaran variables temporales necesarias
     int opt = 0;
     vector<string> paises, ciudadesDisponibles;
     int counter = 0, optPais = 0, optFinal = 0, numDestino = 0;
     string pais, ciudad;
-
+    //Se despliegan los continentes
     for(int i = 0; i < 5; i++) cout << i+1 << "] " << continentes[i] << endl;
     
+    //Se solicita al usuario ingresar el numero de continente
     cout << endl << "Ingrese el numero del continente al que desea visitar: ";
     cin >> opt;
     string continente = continentes[opt-1];
+
+    //Se despliegan los paises disponibles en dicho continente: 
+
     cout << endl << "Países disponibles en " << continente << ": " << endl << endl;
 
+    //Se agregan los paises de dicho continente a la lista de países
     for(int i = 1; i < 60; i++){
         if(ciudades[i].continente == continente)paises.push_back(ciudades[i].pais);
     }
 
+    //Se ordenan alfabeticamente y se eliminan duplicados
     sort(paises.begin(), paises.end(), compNombres);
     paises.erase(unique(paises.begin(), paises.end()), paises.end());
 
+    //Se muestran en pantalla
     for(vector<string>::iterator it=paises.begin(); it!=paises.end(); it++){
         counter++;
         cout << counter << "] " << *it << endl;
     }
+
+
+    //Se soclicita al usuario el numero del país que desea visitar
     cout << endl;
-        cout << "Ingrese el numero del país al que desea visitar: ";
-        cin >> optPais;
+    cout << "Ingrese el numero del país al que desea visitar: ";
+    cin >> optPais;
     cout << endl;
 
+    //Se guarda el nombre del país seleccionado
     counter = 0;
     for(vector<string>::iterator it=paises.begin(); it!=paises.end(); it++){
         counter++;
         if(counter == optPais) pais = *it;
     }
     
+    //Se llena la lista de ciudades con las del país correspondiente
     counter = 0;
     for(int i = 1; i < 60; i++){
         if(ciudades[i].pais == pais) ciudadesDisponibles.push_back(ciudades[i].ciudad);
     }
 
+    //Se ordenan alfabeticamente y se eliminan duplicados
     sort(ciudadesDisponibles.begin(), ciudadesDisponibles.end(), compNombres);
     ciudadesDisponibles.erase(unique(ciudadesDisponibles.begin(), ciudadesDisponibles.end()), ciudadesDisponibles.end());
 
+
+    //Se muestran en pantalla
     counter = 0;
     for(vector<string>::iterator it=ciudadesDisponibles.begin(); it!=ciudadesDisponibles.end(); it++){
         counter++;
         cout << counter << "] " << *it << endl;
     }
     
+    //Se solicita al usuario el numero de la ciudad que desea visitar
     cout << endl;
     cout << "Ciudades disponibles en " << pais << ": " << endl;
     cout << "Ingrese el numero de la ciudad que desea visitar: ";
     cin >> optFinal;
 
+    //Se guarda el nombre de la ciudad
     counter = 0;
     for(vector<string>::iterator it=ciudadesDisponibles.begin(); it!=ciudadesDisponibles.end(); it++){
         counter++;
         if(counter == optFinal) ciudad = *it;
     }
 
+    //Se busca en el arreglo de ciudades para obtener su correlativo correspondiente
     for(int i = 1; i < 60; i++){
         if(ciudades[i].ciudad == ciudad) numDestino = i;
     }
 
+    //Se retorna el correlativo de la ciudad
     return numDestino;
 }
 
