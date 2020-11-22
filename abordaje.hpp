@@ -7,8 +7,7 @@
 
 using namespace std;
 
-/*informacion de cada pasajero 
-Struct que debe ser retirado del main.cpp*/
+/*informacion de cada pasajero*/
 struct cliente{
     string nombre;
     int edad;
