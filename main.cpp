@@ -128,7 +128,7 @@ void clientes()
         //cout << "Primer destino: " << ciudades[rutaCliente.pares.front().destino].ciudad << endl;
         
         cout<<"Redirigiendo al sistema de registro de maletas..."<<endl;
-        //ernesto's code.
+        MenuMaletas();
         cin.ignore();
         
         if (unPasajero.discapacidad=='s' || unPasajero.edad>65) //validacion de lista de pertenencia
@@ -139,7 +139,6 @@ void clientes()
             listaPasajeros.push_back(unPasajero); //cola pasajeros
         } 
         cont++;
-
     }
 }
 
@@ -229,7 +228,22 @@ int despliegueDestinos(){
 }
 
 void ganancias(){
-    cout<<"ganancias."<<endl;
+
+    float ganancia1=0, ganancia2=0, gananciaTotal=0;
+
+    for (int i = 0; i < listaPasajeros.size(); i++)
+    {
+        ganancia1+=(listaPasajeros[i].rutaVuelo.peso)*2.03;
+    }
+
+    for (int i = 0; i < pasajerosDiscapacitados.size(); i++)
+    {
+        ganancia2+=(pasajerosDiscapacitados[i].rutaVuelo.peso)*2.03;
+    }
+
+    gananciaTotal+=ganancia1+ganancia2;
+
+    cout<<"ganancias: "<<gananciaTotal<<endl;
 }
 
 void verNums(int opt)
