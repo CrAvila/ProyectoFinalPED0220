@@ -42,11 +42,7 @@ struct Data
     int peso;
 };
 
-struct RutaFinal
-{
-    string rutaFinal;
-    float precioToal;
-};
+
 
 destino ciudades[60] = {
         {"San Salvador",        "El Salvador",            "América"},
@@ -241,26 +237,26 @@ list<Data>* adj; //Puntero al arreglo de la lista de adyacencia
 void agregarBorde(Nodo n[], int v);
 void imprimirTodosLosCaminos(int s, int d);
 void buscarCaminos(int, int, bool[], int[], int&, ruta*); 
-int comenzarBusqueda(int s, int d);
-void imprimirMejorRuta();
+ruta comenzarBusqueda(int s, int d);
+ruta imprimirMejorRuta();
 
-int comenzarBusqueda(int s, int d)
+ruta comenzarBusqueda(int s, int d)
 {
+    ruta RutaFinal;
     V = 60;
     adj = new list<Data>[V];
-
     
     agregarBorde(node, 114); 
 
-    cout << "La siguiente es la mejor ruta desde " << ciudades[s].ciudad << " a " << ciudades[d].ciudad << endl << endl;
+    cout << endl << endl << "La siguiente es la mejor ruta desde " << ciudades[s].ciudad << " a " << ciudades[d].ciudad << endl << endl;
      imprimirTodosLosCaminos(s, d);
-     imprimirMejorRuta();
+     RutaFinal = imprimirMejorRuta();
 
     cout << "La siguiente es la mejor ruta de regreso desde " << ciudades[d].ciudad << " a " << ciudades[s].ciudad << endl << endl;
     imprimirTodosLosCaminos(d, s);
 
     imprimirMejorRuta();
-    return 0;
+    return RutaFinal;
    }
 
 //Conecta los diferentes vertices del grafo
@@ -271,12 +267,13 @@ void agregarBorde(Nodo n[], int v)
     {
         data.fin = n[i].fin;
         data.peso = n[i].peso;
-
         adj[n[i].inicio].push_back(data);
     }
 }
 
-void imprimirMejorRuta(){
+ruta imprimirMejorRuta(){
+    ruta unaRuta;
+    
     float menor = rutas.front().peso;
     queue<ruta> temp;
 
@@ -290,6 +287,7 @@ void imprimirMejorRuta(){
 
     while(!temp.empty()){
         if(temp.front().peso == menor){
+            unaRuta = temp.front();
             while(!temp.front().pares.empty()){
                 cout  << "[" << temp.front().pares.front().peso << "]  "
                       << ciudades[temp.front().pares.front().origen].ciudad << " (" << ciudades[temp.front().pares.front().origen].pais << ") -> "
@@ -301,6 +299,7 @@ void imprimirMejorRuta(){
         }
         temp.pop();
     }
+    return unaRuta;
 }
 
 //Imprime todos los caminos de 's' a 'd'

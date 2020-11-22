@@ -57,6 +57,7 @@ int main()
         {
             case 1:
                 clientes();
+                
             break;
             case 2:
                 ganancias();
@@ -76,7 +77,6 @@ int main()
     } while (stop);
     return 0;
 
-    
 }
 
 void clientes()
@@ -96,9 +96,9 @@ void clientes()
 
     while (cont<num)
     {
-        cout<<"Ingrese el nombre del pasajero "<<cont+1<<": "<<endl;
+        cout<<"Ingrese el nombre del pasajero "<<cont+1<<": " ;
         getline(cin, unPasajero.nombre);
-        cout<<"Ingrese la edad del pasajero "<<cont+1<<": "<<endl;
+        cout<<"Ingrese la edad del pasajero "<<cont+1<<": ";
         cin>>unPasajero.edad;
         cout<<"Tiene alguna discapacidad? ";
         bool opt2=true;
@@ -120,7 +120,11 @@ void clientes()
         }
 
         cout<< endl << "Continentes disponibles: "<<endl << endl;
-        despliegueDestinos();
+        
+        //Retorna la ruta con todos sus datos
+        ruta rutaCliente = comenzarBusqueda(0, despliegueDestinos());
+
+        cout << "Primer destino: " << ciudades[rutaCliente.pares.front().destino].ciudad << endl;
         bool opt3=true;
         while(opt3) //validacion de dato
         {
@@ -132,6 +136,7 @@ void clientes()
                 opt3=true;
             }else opt3=false;   
         }
+        
         
         cout<<"Redirigiendo al sistema de registro de maletas..."<<endl;
         //ernesto's code.
@@ -152,6 +157,7 @@ int despliegueDestinos(){
     vector<string> paises, ciudadesDisponibles;
     int counter = 0, optPais = 0, optFinal = 0, numDestino = 0;
     string pais, ciudad;
+
     //Se despliegan los continentes
     for(int i = 0; i < 5; i++) cout << i+1 << "] " << continentes[i] << endl;
     
@@ -161,7 +167,6 @@ int despliegueDestinos(){
     string continente = continentes[opt-1];
 
     //Se despliegan los paises disponibles en dicho continente: 
-
     cout << endl << "Países disponibles en " << continente << ": " << endl << endl;
 
     //Se agregan los paises de dicho continente a la lista de países
