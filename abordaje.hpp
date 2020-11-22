@@ -105,7 +105,7 @@ void Abordar_pasajeros(){
     }
 }
 //Funcion secundaria
-void Abordaje_destino(string ds, vector <cliente> pasajeros , vector <cliente> pasajerosDiscapacitados,ruta rutaCliente){
+void Abordaje_destino(string ds, vector <cliente> pasajeros , vector <cliente> pasajerosDiscapacitados){
     pasajero unp; // un pasajero
 
     if (!prioritario.empty() && !normal.empty()){ //Condicion para que no se pueda tener dos destinos en una misma cola

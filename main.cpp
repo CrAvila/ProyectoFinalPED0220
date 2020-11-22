@@ -4,19 +4,9 @@
 #include <algorithm>
 #include "rutas.hpp"
 #include "maletas.hpp"
-//#include "abordaje.hpp"
+#include "abordaje.hpp"
 
 using namespace std;
-
-//Andrea subio su codigo yay!
-
-struct cliente
-{
-    string nombre;
-    int edad;
-    char discapacidad;
-    ruta rutaVuelo;
-};
 
 bool compNombres(string a, string b) {return a < b;};
 
@@ -62,7 +52,7 @@ int main()
                 ganancias();
             break;
             case 3:
-                //Menu_abordaje(listaPasajeros, pasajerosDiscapacitados);
+                Menu_abordaje(listaPasajeros, pasajerosDiscapacitados);
             break;
             case 4:
                 stop=false;
