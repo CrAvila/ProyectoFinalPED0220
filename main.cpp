@@ -3,10 +3,8 @@
 #include <string>
 #include <algorithm>
 #include "rutas.hpp"
-
-/*#include "rutas.hpp"
 #include "maletas.hpp"
-#include "abordaje.hpp"*/
+//#include "abordaje.hpp"
 
 using namespace std;
 
@@ -17,7 +15,7 @@ struct cliente
     string nombre;
     int edad;
     char discapacidad;
-    int destino;
+    ruta rutaVuelo;
 };
 
 bool compNombres(string a, string b) {return a < b;};
@@ -65,7 +63,7 @@ int main()
                 ganancias();
             break;
             case 3:
-                //samuel's code.
+                //menu(listaPasajeros, pasajerosDiscapacitados);
             break;
             case 4:
                 stop=false;
@@ -126,19 +124,9 @@ void clientes()
         //Retorna la ruta con todos sus datos
         rutaCliente = comenzarBusqueda(0, despliegueDestinos());
 
-        cout << "Primer destino: " << ciudades[rutaCliente.pares.front().destino].ciudad << endl;
-        bool opt3=true;
-        while(opt3) //validacion de dato
-        {
-            cout<<"Elija su opcion: ";
-            cin>>unPasajero.destino;
-            if (unPasajero.destino>8)
-            {
-                cout<<"Opcion no valida. Intentelo de nuevo. "<<endl;
-                opt3=true;
-            }else opt3=false;   
-        }
-        
+        unPasajero.rutaVuelo=rutaCliente;
+
+        //cout << "Primer destino: " << ciudades[rutaCliente.pares.front().destino].ciudad << endl;
         
         cout<<"Redirigiendo al sistema de registro de maletas..."<<endl;
         //ernesto's code.
@@ -186,7 +174,6 @@ int despliegueDestinos(){
         cout << counter << "] " << *it << endl;
     }
 
-
     //Se soclicita al usuario el numero del país que desea visitar
     cout << endl;
     cout << "Ingrese el numero del país al que desea visitar: ";
@@ -209,7 +196,6 @@ int despliegueDestinos(){
     //Se ordenan alfabeticamente y se eliminan duplicados
     sort(ciudadesDisponibles.begin(), ciudadesDisponibles.end(), compNombres);
     ciudadesDisponibles.erase(unique(ciudadesDisponibles.begin(), ciudadesDisponibles.end()), ciudadesDisponibles.end());
-
 
     //Se muestran en pantalla
     counter = 0;
