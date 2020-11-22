@@ -57,7 +57,7 @@ int main()
         {
             case 1:
                 clientes();
-                
+                cout << "Primer destino test: " << ciudades[pasajerosDiscapacitados[0].rutaVuelo.pares.front().destino].ciudad << endl;
             break;
             case 2:
                 ganancias();
@@ -75,8 +75,6 @@ int main()
         }
         
     } while (stop);
-
-    ciudades[unPasajero[0].rutaVuelo.pares.front().destino].ciudad;
 
     return 0;
 }
