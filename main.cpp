@@ -57,7 +57,6 @@ int main()
         {
             case 1:
                 clientes();
-                cout << "Primer destino test: " << ciudades[pasajerosDiscapacitados[0].rutaVuelo.pares.front().destino].ciudad << endl;
             break;
             case 2:
                 ganancias();
@@ -135,8 +134,14 @@ void clientes()
         if (unPasajero.discapacidad=='s' || unPasajero.edad>65) //validacion de lista de pertenencia
         {
             pasajerosDiscapacitados.push_back(unPasajero); //cola pasajeros discapacitados y adultos mayores
-        } else listaPasajeros.push_back(unPasajero); //cola pasajeros 
+        } else 
+
+        {
+            listaPasajeros.push_back(unPasajero); //cola pasajeros 
+        }
+
         cont++;
+
 
     }
 }
