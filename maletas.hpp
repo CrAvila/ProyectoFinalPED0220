@@ -69,7 +69,7 @@ void agregaMaletas ()
           cin >> pes;
 
           if(pes < 0.1){
-              cout << "Ingrese un valor válido\n\n" << endl;
+              cout << "Ingrese un peso válido\n\n" << endl;
           }else{
               mal.peso.push_back(pes);
           }

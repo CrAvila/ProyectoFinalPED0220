@@ -1,5 +1,9 @@
 #include <iostream>
 #include <vector>
+#include <string>
+#include <algorithm>
+#include "rutas.hpp"
+
 /*#include "rutas.hpp"
 #include "maletas.hpp"
 #include "abordaje.hpp"*/
@@ -16,16 +20,23 @@ struct cliente
     int destino;
 };
 
+bool compNombres(string a, string b) {return a < b;};
+
 void clientes();
 void ganancias();
-void despliegueDestinos();
+int despliegueDestinos();
 void verNums(int);
 
 vector <cliente> listaPasajeros;
 vector<cliente> pasajerosDiscapacitados;
 
+string continentes[5] = {
+    "América", "África", "Asia", "Europa", "Oceanía" 
+};
+
 int main()
 {
+
     bool stop=true;
     int opt;
     cout<<"Bienvenido"<<endl;
@@ -108,7 +119,7 @@ void clientes()
             
         }
 
-        cout<<"Destinos posibles: "<<endl;
+        cout<< endl << "Continentes disponibles: "<<endl << endl;
         despliegueDestinos();
         bool opt3=true;
         while(opt3) //validacion de dato
@@ -135,17 +146,84 @@ void clientes()
     }
 }
 
-void despliegueDestinos(){
+int despliegueDestinos(){
+    int opt = 0;
+    for(int i = 0; i < 5; i++){
+        cout << i+1 << "] " << continentes[i] << endl;
+    }
+    
+    cout << endl << "Ingrese el numero del continente al que desea visitar: ";
+    cin >> opt;
+    string continente = continentes[opt-1];
+    cout << endl << "Países disponibles en " << continente << ": " << endl << endl;
 
-    cout<<"Destino 1."<<endl;
-    cout<<"Destino 2."<<endl;
-    cout<<"Destino 3."<<endl;
-    cout<<"Destino 4."<<endl;
-    cout<<"Destino 5."<<endl;
-    cout<<"Destino 6."<<endl;
-    cout<<"Destino 7."<<endl;
-    cout<<"Destino 8."<<endl;
+    vector<string> paises;
 
+    for(int i = 1; i < 60; i++){
+        if(ciudades[i].continente == continente){
+            paises.push_back(ciudades[i].pais);
+        }
+    }
+    sort(paises.begin(), paises.end(), compNombres);
+    paises.erase(unique(paises.begin(), paises.end()), paises.end());
+
+    int counter = 0;
+    for(vector<string>::iterator it=paises.begin(); it!=paises.end(); it++){
+        counter++;
+        cout << counter << "] " << *it << endl;
+    }
+    cout << endl;
+    int optPais = 0;
+        cout << "Ingrese el numero del país al que desea visitar: ";
+        cin >> optPais;
+    cout << endl;
+
+    string pais;
+
+    counter = 0;
+
+    for(vector<string>::iterator it=paises.begin(); it!=paises.end(); it++){
+        counter++;
+        if(counter == optPais) pais = *it;
+    }
+    
+    counter = 0;
+    vector<string> ciudadesDisponibles;
+    for(int i = 1; i < 60; i++){
+        if(ciudades[i].pais == pais){
+            ciudadesDisponibles.push_back(ciudades[i].ciudad);
+        }
+    }
+
+    sort(ciudadesDisponibles.begin(), ciudadesDisponibles.end(), compNombres);
+    ciudadesDisponibles.erase(unique(ciudadesDisponibles.begin(), ciudadesDisponibles.end()), ciudadesDisponibles.end());
+
+    counter = 0;
+    for(vector<string>::iterator it=ciudadesDisponibles.begin(); it!=ciudadesDisponibles.end(); it++){
+        counter++;
+        cout << counter << "] " << *it << endl;
+    }
+    
+    cout << endl;
+    cout << "Ciudades disponibles en " << pais << ": " << endl;
+    int optFinal = 0;
+        cout << "Ingrese el numero de la ciudad que desea visitar: ";
+        cin >> optFinal;
+
+
+    string ciudad;
+    counter = 0;
+    for(vector<string>::iterator it=ciudadesDisponibles.begin(); it!=ciudadesDisponibles.end(); it++){
+        if(counter == optFinal) ciudad = *it;
+    }
+
+    int numDestino = 0;
+
+    for(int i = 1; i < 60; i++){
+        if(ciudades[i].ciudad == ciudad) numDestino = i;
+    }
+
+    return numDestino;
 }
 
 void ganancias(){
