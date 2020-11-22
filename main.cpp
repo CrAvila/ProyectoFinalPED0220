@@ -148,6 +148,16 @@ void clientes()
 
 int despliegueDestinos(){
     int opt = 0;
+    vector<string> paises;
+    vector<string> ciudadesDisponibles;
+    int counter = 0;
+    int optPais = 0;
+    int optFinal = 0;
+    int numDestino = 0;
+    string pais;
+    string ciudad;
+
+
     for(int i = 0; i < 5; i++){
         cout << i+1 << "] " << continentes[i] << endl;
     }
@@ -157,7 +167,6 @@ int despliegueDestinos(){
     string continente = continentes[opt-1];
     cout << endl << "Países disponibles en " << continente << ": " << endl << endl;
 
-    vector<string> paises;
 
     for(int i = 1; i < 60; i++){
         if(ciudades[i].continente == continente){
@@ -167,28 +176,22 @@ int despliegueDestinos(){
     sort(paises.begin(), paises.end(), compNombres);
     paises.erase(unique(paises.begin(), paises.end()), paises.end());
 
-    int counter = 0;
     for(vector<string>::iterator it=paises.begin(); it!=paises.end(); it++){
         counter++;
         cout << counter << "] " << *it << endl;
     }
     cout << endl;
-    int optPais = 0;
         cout << "Ingrese el numero del país al que desea visitar: ";
         cin >> optPais;
     cout << endl;
 
-    string pais;
-
     counter = 0;
-
     for(vector<string>::iterator it=paises.begin(); it!=paises.end(); it++){
         counter++;
         if(counter == optPais) pais = *it;
     }
     
     counter = 0;
-    vector<string> ciudadesDisponibles;
     for(int i = 1; i < 60; i++){
         if(ciudades[i].pais == pais){
             ciudadesDisponibles.push_back(ciudades[i].ciudad);
@@ -206,18 +209,15 @@ int despliegueDestinos(){
     
     cout << endl;
     cout << "Ciudades disponibles en " << pais << ": " << endl;
-    int optFinal = 0;
+    
         cout << "Ingrese el numero de la ciudad que desea visitar: ";
         cin >> optFinal;
 
-
-    string ciudad;
     counter = 0;
     for(vector<string>::iterator it=ciudadesDisponibles.begin(); it!=ciudadesDisponibles.end(); it++){
+        counter++;
         if(counter == optFinal) ciudad = *it;
     }
-
-    int numDestino = 0;
 
     for(int i = 1; i < 60; i++){
         if(ciudades[i].ciudad == ciudad) numDestino = i;
