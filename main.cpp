@@ -135,13 +135,10 @@ void clientes()
         {
             pasajerosDiscapacitados.push_back(unPasajero); //cola pasajeros discapacitados y adultos mayores
         } else 
-
         {
-            listaPasajeros.push_back(unPasajero); //cola pasajeros 
-        }
-
+            listaPasajeros.push_back(unPasajero); //cola pasajeros
+        } 
         cont++;
-
 
     }
 }
