@@ -57,7 +57,7 @@ void Elegir_destino(vector <cliente> pasajeros , vector <cliente> pasajerosDisca
     
     cout<<endl<<"++++++++++ CODIGOS DE PAISES +++++++++"<<endl;
     //Se imprime la primera puerta
-    cout<<"Puerta "<<n<<" con destino a "<<ds<<endl;
+    //cout<<"Puerta "<<n<<" con destino a "<<ds<<endl;
     
     /*recorremos la lista comparando los destinos para sacar solo los destinos existentes
     si estos destinos son diferentes al anterior se imprime como una puerta nueva*/
