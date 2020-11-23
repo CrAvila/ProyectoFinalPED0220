@@ -1,6 +1,7 @@
 #include <iostream>
 #include <stack>
 #include <vector>
+#include <clocale>
 
 using namespace std;
 struct maleta{
@@ -31,7 +32,7 @@ int MenuMaletas ()
       cout << "________________________________________"<< endl;
       cout << "-----------------------------------------"<< endl;
       cout << endl;
-      cout << " Opción : "; 
+      cout << " Opcion : "; 
       cin>> opcion;
       if(opcion==1){
          agregaMaletas();
@@ -40,7 +41,7 @@ int MenuMaletas ()
       }else if(opcion ==3){
          seguir = false;
       }else{
-          cout << "Opción Inválida\n\n";
+          cout << "Opcion Invalida\n\n";
       }
     }
   while (seguir);
@@ -69,7 +70,7 @@ void agregaMaletas ()
           cin >> pes;
 
           if(pes < 0.1){
-              cout << "Ingrese un peso válido\n\n" << endl;
+              cout << "Ingrese un peso valido\n\n" << endl;
           }else{
               mal.peso.push_back(pes);
           }

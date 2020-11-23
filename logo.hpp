@@ -1,5 +1,5 @@
 #include <iostream>
-#include <list>
+#include <clocale>
 
 using namespace std;
 

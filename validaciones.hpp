@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include <iterator>
+#include <clocale>
 
 using namespace std;
 
@@ -48,14 +49,14 @@ void mostrarMenu(const vector<Opcion>& menu){
     }
 }
 
-//Función para verificar que el entero introducido sea válido
+//Funcion para verificar que el entero introducido sea valido
 int validarNatural(string numero){ //Se pone como argumento el string del numero
-    /*Mientras se introduzca un número
+    /*Mientras se introduzca un numero
         y alguno de sus caracteres no coincida con los permitidos:  */
     while(cin >> numero && numero.find_first_not_of("1234567890") != string::npos || atof(numero.c_str()) < 1){
         //Se advierte el error
         cout << "Numero invalido" << endl << endl;
-        if(atof(numero.c_str()) < 1) //si el numero ingresado es negativo, también se advierte
+        if(atof(numero.c_str()) < 1) //si el numero ingresado es negativo, tambien se advierte
             cout << "Debe ingresar un entero mayor o igual a 1." << endl;
         cout << "Por favor intente de nuevo: ";
         //Se borra la entrada anterior
@@ -66,14 +67,14 @@ int validarNatural(string numero){ //Se pone como argumento el string del numero
     return (int) atof(numero.c_str() );
 }
 
-//Función para verificar que el entero introducido sea válido
+//Funcion para verificar que el entero introducido sea valido
 int validarEntero(string numero){ //Se pone como argumento el string del numero
-    /*Mientras se introduzca un número
+    /*Mientras se introduzca un numero
         y alguno de sus caracteres no coincida con los permitidos:  */
     while(cin >> numero && numero.find_first_not_of("1234567890") != string::npos){
         //Se advierte el error
         cout << "Numero invalido" << endl << endl;
-        if(atof(numero.c_str()) < 1) //si el numero ingresado es negativo, también se advierte
+        if(atof(numero.c_str()) < 1) //si el numero ingresado es negativo, tambien se advierte
             cout << "Debe ingresar solo numeros digitos." << endl;
         cout << "Por favor intente de nuevo: ";
         //Se borra la entrada anterior
@@ -84,14 +85,14 @@ int validarEntero(string numero){ //Se pone como argumento el string del numero
     return (int) atof(numero.c_str() );
 }
 
-//Función para verificar que el flotante introducido sea válido
+//Funcion para verificar que el flotante introducido sea valido
 float validarFloat(string numero){ //Se pone como argumento el string del numero
-    /*Mientras se introduzca un número
+    /*Mientras se introduzca un numero
         y alguno de sus caracteres no coincida con los permitidos:  */
     while(cin >> numero && numero.find_first_not_of(".1234567890") != string::npos || atof(numero.c_str()) < 1){
         //Se advierte el error
         cout << "Numero natural invalido" << endl << endl;
-        if(atof(numero.c_str()) < 1) //si el numero ingresado es negativo, también se advierte
+        if(atof(numero.c_str()) < 1) //si el numero ingresado es negativo, tambien se advierte
             cout << "Debe ingresar un numero positivo." << endl;
         cout << "Por favor intente de nuevo: ";
         //Se borra la entrada anterior
@@ -103,12 +104,12 @@ float validarFloat(string numero){ //Se pone como argumento el string del numero
 }
 
 int validarRango(string numero, int min, int max){ //Se pone como argumento el string del numero
-    /*Mientras se introduzca un número
+    /*Mientras se introduzca un numero
         y alguno de sus caracteres no coincida con los permitidos:  */
     while(cin >> numero && (numero.find_first_not_of("1234567890") != string::npos || (atof(numero.c_str()) > max)) || (atof(numero.c_str()) < min)){
         //Se advierte el error
         cout << "Numero invalido" << endl << endl;
-        if(atof(numero.c_str()) < 1 || atof(numero.c_str()) > max) //si el numero ingresado es negativo, también se advierte
+        if(atof(numero.c_str()) < 1 || atof(numero.c_str()) > max) //si el numero ingresado es negativo, tambien se advierte
             cout << "Debe ingresar un entero entre " << min << " y " << max << endl;
         cout << "Por favor intente de nuevo: ";
         //Se borra la entrada anterior

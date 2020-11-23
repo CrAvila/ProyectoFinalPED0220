@@ -2,10 +2,10 @@
 #pragma once
 #include <iostream>
 #include <vector>
-//#include <set>
 #include <queue>
 #include "rutas.hpp"
 #include <string>
+#include <clocale>
 
 using namespace std;
 
@@ -28,46 +28,6 @@ vector <puerta> puertas;
 
 void Crear_puerta(vector <cliente>, vector <cliente>);
 void Abordar_pasajeros(puerta, vector <cliente>, vector <cliente>);
-
-//Codigo Gil
-// void crearPuertas(set<string> destinos, vector <cliente> pasajeros,vector <cliente> pasajerosDiscapacitados);
-// void agregarPasajeros(vector <cliente> pasajeross,vector <cliente> pasajerosDiscapacitados);
-
-//Codigo Gil
-// void crearPuertas(set<string> destinos, vector <cliente> pasajeros,vector <cliente> pasajerosDiscapacitados)
-// {
-//     Puertas aux;
-
-//     cout << endl;
-//     for (auto it = destinos.begin(); it != destinos.end(); ++it)
-//     {
-//         cout << destinos.size();
-//         aux.destino = *it;
-//         puerta.push_back(aux);
-//     }
-//     cout << endl;
-    
-//     agregarPasajeros(pasajeros, pasajerosDiscapacitados);
-// }
-
-//CodigoGil
-// void agregarPasajeros(vector <cliente> pasajeros,vector <cliente> pasajerosDiscapacitados)
-// {
-//     vector<Puertas>::iterator it;
-//     for (it = puerta.begin(); it != < puerta.end(); ptr++) 
-//     {
-//         vector<cliente>::iterator ij;
-//         for (ij = pasajeros.begin(); ij < pasajeros.end(); ij++)
-//         {
-//             //Chequea si el destino del vector es igual al del pasajero
-//             if (*it->destino == ciudades[ij->rutaVuelo.pares.front().destino].ciudad)
-//             {
-//                 //si el destino es el mismo el pasajero sera pusheado a esa parte del vector
-//             }
-            
-//         }
-//     }
-// }
 
 //Funciones ejecutadas directamente por el menu 
 void Crear_puerta(vector <cliente> pasajeros , vector <cliente> pasajerosDiscapacitados){

@@ -8,6 +8,8 @@
 #include "abordaje.hpp"
 #include "validaciones.hpp"
 #include "logo.hpp"
+#include <clocale>
+
 using namespace std;
 
 bool compNombres(string a, string b) {return a < b;};
@@ -22,7 +24,7 @@ vector<cliente> pasajerosDiscapacitados;
 set<string> destinos;
 
 string continentes[5] = {
-    "América", "África", "Asia", "Europa", "Oceanía" 
+    "America", "Africa", "Asia", "Europa", "Oceania" 
 };
 
 ruta rutaCliente;
@@ -30,7 +32,7 @@ ruta rutaCliente;
 int main()
 {
     mostrarLogo();
-    
+
     bool stop=true;
     int opt = 0;
     cout<<"Bienvenido"<<endl;
@@ -181,9 +183,9 @@ int despliegueDestinos(){
     string continente = continentes[opt-1];
 
     //Se despliegan los paises disponibles en dicho continente: 
-    cout << endl << "Países disponibles en " << continente << ": " << endl << endl;
+    cout << endl << "Paises disponibles en " << continente << ": " << endl << endl;
 
-    //Se agregan los paises de dicho continente a la lista de países
+    //Se agregan los paises de dicho continente a la lista de paises
     for(int i = 1; i < 60; i++){
         if(ciudades[i].continente == continente)paises.push_back(ciudades[i].pais);
     }
@@ -198,20 +200,20 @@ int despliegueDestinos(){
         cout << counter << "] " << *it << endl;
     }
 
-    //Se soclicita al usuario el numero del país que desea visitar
+    //Se soclicita al usuario el numero del pais que desea visitar
     cout << endl;
-    cout << "Ingrese el numero del país al que desea visitar: ";
+    cout << "Ingrese el numero del pais al que desea visitar: ";
     optPais = validarRango(to_string(optPais), 1, paises.size());
     cout << endl;
 
-    //Se guarda el nombre del país seleccionado
+    //Se guarda el nombre del pais seleccionado
     counter = 0;
     for(vector<string>::iterator it=paises.begin(); it!=paises.end(); it++){
         counter++;
         if(counter == optPais) pais = *it;
     }
     
-    //Se llena la lista de ciudades con las del país correspondiente
+    //Se llena la lista de ciudades con las del pais correspondiente
     counter = 0;
     for(int i = 1; i < 60; i++){
         if(ciudades[i].pais == pais) ciudadesDisponibles.push_back(ciudades[i].ciudad);
