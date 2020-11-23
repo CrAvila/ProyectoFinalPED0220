@@ -63,7 +63,20 @@ void crearPuertas(set<string> destinos, vector <cliente> pasajeros,vector <clien
 
 void agregarPasajeros(vector <cliente> pasajeros,vector <cliente> pasajerosDiscapacitados)
 {
-
+    vector<Puertas>::iterator it;
+    for (it = puerta.begin(); ptr < puerta.end(); ptr++) 
+    {
+        vector<cliente>::iterator ij;
+        for (ij = pasajeros.begin(); ij < pasajeros.end(); ij++)
+        {
+            //Chequea si el destino del vector es igual al del pasajero
+            if (*it->destino == ciudades[ij->rutaVuelo.pares.front().destino].ciudad)
+            {
+                //si el destino es el mismo el pasajero sera pusheado a esa parte del vector
+            }
+            
+        }
+    }
 }
 
 // void Menu_abordaje(vector <cliente> pasajeros, vector <cliente> pasajerosDiscapacitados){
