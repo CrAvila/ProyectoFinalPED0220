@@ -55,7 +55,7 @@ int main()
             break;
             case 3:
                 //crearPuertas(destinos, listaPasajeros, pasajerosDiscapacitados);
-                Menu_abordaje(listaPasajeros, pasajerosDiscapacitados);
+                Crear_puerta(listaPasajeros, pasajerosDiscapacitados);
             break;
             case 4:
                 stop=false;
