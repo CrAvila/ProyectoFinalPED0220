@@ -7,7 +7,7 @@
 #include "maletas.hpp"
 #include "abordaje.hpp"
 #include "validaciones.hpp"
-
+#include "logo.hpp"
 using namespace std;
 
 bool compNombres(string a, string b) {return a < b;};
@@ -29,7 +29,8 @@ ruta rutaCliente;
 
 int main()
 {
-
+    mostrarLogo();
+    
     bool stop=true;
     int opt = 0;
     cout<<"Bienvenido"<<endl;
