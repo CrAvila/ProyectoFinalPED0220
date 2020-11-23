@@ -14,6 +14,7 @@ struct cliente{
     int edad;
     char discapacidad;
     ruta rutaVuelo;
+    float costoTotal;
 };
 //nuevo struc para las colas de las puertas, que contienen solo los datos de interes para el abordaje
 struct pasajero{

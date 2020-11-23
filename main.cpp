@@ -82,7 +82,7 @@ void clientes()
     int cont=0;
 
     cout<<"Bienvenido. "<<endl;
-    cout<<"Numero de pasajero a ingresar: ";
+    cout<<"Numero de pasajeros a ingresar: ";
     cin>>num;
     cin.ignore();
 
@@ -117,14 +117,15 @@ void clientes()
         rutaCliente = comenzarBusqueda(0, despliegueDestinos());
 
         unPasajero.rutaVuelo=rutaCliente;
-
+        unPasajero.costoTotal = costoTotalFinal;
         string destinoData = ciudades[unPasajero.rutaVuelo.pares.front().destino].ciudad;
-
+        cout << endl << "Costo total por ida y vuelta: $" << unPasajero.costoTotal << endl << endl;
         destinos.insert(destinoData);
 
         //cout << "Primer destino: " << ciudades[rutaCliente.pares.front().destino].ciudad << endl;
         
         cout<<"Redirigiendo al sistema de registro de maletas..."<<endl;
+        system("pause");
         MenuMaletas();
         cin.ignore();
         
@@ -230,17 +231,17 @@ void ganancias(){
 
     for (int i = 0; i < listaPasajeros.size(); i++)
     {
-        ganancia1+=(listaPasajeros[i].rutaVuelo.peso)*2.03;
+        ganancia1+=(listaPasajeros[i].costoTotal);
     }
 
     for (int i = 0; i < pasajerosDiscapacitados.size(); i++)
     {
-        ganancia2+=(pasajerosDiscapacitados[i].rutaVuelo.peso)*2.03;
+        ganancia2+=(pasajerosDiscapacitados[i].costoTotal);
     }
 
     gananciaTotal+=ganancia1+ganancia2;
 
-    cout<<"ganancias: "<<gananciaTotal<<endl;
+    cout<<"\nGanancias por boletos: $"<<gananciaTotal<<endl << endl;
 }
 
 void verNums(int opt)

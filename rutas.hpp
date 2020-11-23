@@ -42,7 +42,12 @@ struct Data
     int peso;
 };
 
+struct idaYVuelta{
+    ruta ida;
+    ruta vuelta;
+};
 
+idaYVuelta viajeCompleto;
 
 destino ciudades[60] = {
         {"San Salvador",        "El Salvador",            "América"},
@@ -239,9 +244,11 @@ void imprimirTodosLosCaminos(int s, int d);
 void buscarCaminos(int, int, bool[], int[], int&, ruta*); 
 ruta comenzarBusqueda(int s, int d);
 ruta imprimirMejorRuta();
+float costoTotalFinal = 0;
 
 ruta comenzarBusqueda(int s, int d)
 {
+    costoTotalFinal = 0;
     ruta RutaFinal;
     V = 60;
     adj = new list<Data>[V];
@@ -251,11 +258,13 @@ ruta comenzarBusqueda(int s, int d)
     cout << endl << endl << "La siguiente es la mejor ruta desde " << ciudades[s].ciudad << " a " << ciudades[d].ciudad << endl << endl;
      imprimirTodosLosCaminos(s, d);
      RutaFinal = imprimirMejorRuta();
+     viajeCompleto.ida = RutaFinal;
 
     cout << "La siguiente es la mejor ruta de regreso desde " << ciudades[d].ciudad << " a " << ciudades[s].ciudad << endl << endl;
     imprimirTodosLosCaminos(d, s);
 
-    imprimirMejorRuta();
+    viajeCompleto.vuelta = imprimirMejorRuta();
+    costoTotalFinal = 2.73 * (viajeCompleto.ida.peso + viajeCompleto.vuelta.peso);
     return RutaFinal;
    }
 
@@ -289,13 +298,13 @@ ruta imprimirMejorRuta(){
         if(temp.front().peso == menor){
             unaRuta = temp.front();
             while(!temp.front().pares.empty()){
-                cout  << "[" << temp.front().pares.front().peso << "]  "
+                cout  << "[$" << (temp.front().pares.front().peso) * 2.73 << "]  "
                       << ciudades[temp.front().pares.front().origen].ciudad << " (" << ciudades[temp.front().pares.front().origen].pais << ") -> "
                       << ciudades[temp.front().pares.front().destino].ciudad << " (" << ciudades[temp.front().pares.front().destino].pais << ") "
                       <<  endl;
                 temp.front().pares.pop();
             }
-            cout << "Peso total del viaje: " << temp.front().peso << endl << endl;
+            cout << endl << "Costo total del viaje: $" << (temp.front().peso)*2.73 << endl << endl;
         }
         temp.pop();
     }
