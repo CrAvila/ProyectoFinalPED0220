@@ -64,7 +64,7 @@ void crearPuertas(set<string> destinos, vector <cliente> pasajeros,vector <clien
 void agregarPasajeros(vector <cliente> pasajeros,vector <cliente> pasajerosDiscapacitados)
 {
     vector<Puertas>::iterator it;
-    for (it = puerta.begin(); ptr < puerta.end(); ptr++) 
+    for (it = puerta.begin(); it != < puerta.end(); ptr++) 
     {
         vector<cliente>::iterator ij;
         for (ij = pasajeros.begin(); ij < pasajeros.end(); ij++)
