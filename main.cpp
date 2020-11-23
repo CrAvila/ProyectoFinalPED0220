@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <set>
 #include <string>
 #include <algorithm>
 #include "rutas.hpp"
@@ -17,6 +18,7 @@ void verNums(int);
 
 vector <cliente> listaPasajeros;
 vector<cliente> pasajerosDiscapacitados;
+set<string> destinos;
 
 string continentes[5] = {
     "América", "África", "Asia", "Europa", "Oceanía" 
@@ -52,7 +54,8 @@ int main()
                 ganancias();
             break;
             case 3:
-                Menu_abordaje(listaPasajeros, pasajerosDiscapacitados);
+                crearPuertas(destinos, listaPasajeros, pasajerosDiscapacitados);
+                //Menu_abordaje(listaPasajeros, pasajerosDiscapacitados);
             break;
             case 4:
                 stop=false;
@@ -114,6 +117,8 @@ void clientes()
         rutaCliente = comenzarBusqueda(0, despliegueDestinos());
 
         unPasajero.rutaVuelo=rutaCliente;
+
+        destinos.insert(ciudades[rutaCliente.pares.front().destino].ciudad);
 
         //cout << "Primer destino: " << ciudades[rutaCliente.pares.front().destino].ciudad << endl;
         
