@@ -118,7 +118,9 @@ void clientes()
 
         unPasajero.rutaVuelo=rutaCliente;
 
-        destinos.insert(ciudades[rutaCliente.pares.front().destino].ciudad);
+        string destinoData = ciudades[unPasajero.rutaVuelo.pares.front().destino].ciudad;
+
+        destinos.insert(destinoData);
 
         //cout << "Primer destino: " << ciudades[rutaCliente.pares.front().destino].ciudad << endl;
         

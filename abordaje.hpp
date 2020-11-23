@@ -49,18 +49,21 @@ void crearPuertas(set<string> destinos, vector <cliente> pasajeros,vector <clien
 {
     Puertas aux;
 
+    cout << endl;
     for (auto it = destinos.begin(); it != destinos.end(); ++it)
     {
+        cout << destinos.size();
         aux.destino = *it;
         puerta.push_back(aux);
     }
-
+    cout << endl;
+    
     agregarPasajeros(pasajeros, pasajerosDiscapacitados);
 }
 
 void agregarPasajeros(vector <cliente> pasajeros,vector <cliente> pasajerosDiscapacitados)
 {
-    
+
 }
 
 // void Menu_abordaje(vector <cliente> pasajeros, vector <cliente> pasajerosDiscapacitados){
