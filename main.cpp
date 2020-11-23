@@ -78,14 +78,13 @@ void clientes()
 
     
     //inicio de recoleccion de datos.
-    int num=0;
-    int cont=0;
+    
     bool error = true;
 
     cout << endl;
     cout<<"Bienvenido."<<endl;
     cout << endl;
-    
+
     cin.ignore();
 
     string auxString = " ";
@@ -95,7 +94,7 @@ void clientes()
 
     do
     {
-        cout<<"-Ingrese la edad del pasajero "<<cont+1<<": ";
+        cout<<"-Ingrese la edad del pasajero: ";
         cin>>unPasajero.edad;
 
         if (cin.fail() || unPasajero.edad < 1)
@@ -160,8 +159,6 @@ void clientes()
     {
         listaPasajeros.push_back(unPasajero); //cola pasajeros
     } 
-    cont++;
-    
 }
 
 int despliegueDestinos(){
