@@ -6,6 +6,7 @@
 #include "rutas.hpp"
 #include "maletas.hpp"
 #include "abordaje.hpp"
+#include "validaciones.hpp"
 
 using namespace std;
 
@@ -80,19 +81,63 @@ void clientes()
     //inicio de recoleccion de datos.
     int num=0;
     int cont=0;
+    bool error = true;
 
-    cout<<"Bienvenido. "<<endl;
-    cout<<"Numero de pasajeros a ingresar: ";
-    cin>>num;
+    cout << endl;
+    do
+    {
+        cout<<"Bienvenido. "<<endl;
+        cout<<"Numero de pasajeros a ingresar: ";
+        cin>>num;
+
+        if (cin.fail() || num < 0)
+        {
+            cin.clear();
+            cin.ignore();
+            cout << endl;
+            cout << "Por favor ingresa un numero entero positivo, intentalo otra vez." << endl;
+            cout << "----------------------------------------------------------------" << endl;
+            cout << endl;
+        }
+        else
+        {
+            error = false;
+        }
+    } while (error);
+    cout << endl;
+
     cin.ignore();
 
     while (cont<num)
     {
-        cout<<"Ingrese el nombre del pasajero "<<cont+1<<": " ;
-        getline(cin, unPasajero.nombre);
-        cout<<"Ingrese la edad del pasajero "<<cont+1<<": ";
-        cin>>unPasajero.edad;
-        cout<<"Tiene alguna discapacidad? ";
+        string auxString = " ";
+        bool error = true;
+
+        cout<<"-Ingrese el nombre del pasajero "<<cont+1<<": ";       
+        unPasajero.nombre = validarString();
+
+        do
+        {
+            cout<<"-Ingrese la edad del pasajero "<<cont+1<<": ";
+            cin>>unPasajero.edad;
+
+            if (cin.fail() || unPasajero.edad < 1)
+            {
+                cin.clear();
+                cin.ignore();
+                cout << endl;
+                cout << "Por favor ingresa un numero entero positivo, intentalo otra vez." << endl;
+                cout << "----------------------------------------------------------------" << endl;
+                cout << endl;
+            } 
+            else 
+            {
+                error = false;
+            }
+            
+        } while (error);
+
+        cout<<"-Tiene alguna discapacidad? ";
         bool opt2=true;
         
         while(opt2) //validacion de dato
@@ -246,7 +291,7 @@ void ganancias(){
 
 void verNums(int opt)
 {
-    if (cin.fail())
+    if (cin.fail() || opt < 1 || opt > 4)
     {
         cout<<"Por favor, ingrese solo numeros. "<<endl;
         cin.clear();
