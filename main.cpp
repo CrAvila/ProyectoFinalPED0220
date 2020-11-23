@@ -54,8 +54,8 @@ int main()
                 ganancias();
             break;
             case 3:
-                crearPuertas(destinos, listaPasajeros, pasajerosDiscapacitados);
-                //Menu_abordaje(listaPasajeros, pasajerosDiscapacitados);
+                //crearPuertas(destinos, listaPasajeros, pasajerosDiscapacitados);
+                Menu_abordaje(listaPasajeros, pasajerosDiscapacitados);
             break;
             case 4:
                 stop=false;
