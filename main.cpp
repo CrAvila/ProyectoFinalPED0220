@@ -31,7 +31,7 @@ int main()
 {
 
     bool stop=true;
-    int opt;
+    int opt = 0;
     cout<<"Bienvenido"<<endl;
 
     do
@@ -42,8 +42,7 @@ int main()
         cout<<"               3. Iniciar abordaje."<<endl;
         cout<<"               4. Salir. "<<endl;
         cout<<"Opcion: ";
-        cin>>opt;
-        verNums(opt);
+        opt = validarRango(to_string(opt), 1, 4);
         cout<<"===================================================="<<endl;
 
         switch (opt)
@@ -169,7 +168,7 @@ void clientes()
 
         //cout << "Primer destino: " << ciudades[rutaCliente.pares.front().destino].ciudad << endl;
         
-        cout<<"Redirigiendo al sistema de registro de maletas..."<<endl;
+        cout<<"Redirigiendo al sistema de registro de maletas..."<<endl<<endl;
         system("pause");
         MenuMaletas();
         cin.ignore();
@@ -197,7 +196,7 @@ int despliegueDestinos(){
     
     //Se solicita al usuario ingresar el numero de continente
     cout << endl << "Ingrese el numero del continente al que desea visitar: ";
-    cin >> opt;
+    opt = validarRango(to_string(opt), 1, 5);
     string continente = continentes[opt-1];
 
     //Se despliegan los paises disponibles en dicho continente: 
@@ -221,7 +220,7 @@ int despliegueDestinos(){
     //Se soclicita al usuario el numero del país que desea visitar
     cout << endl;
     cout << "Ingrese el numero del país al que desea visitar: ";
-    cin >> optPais;
+    optPais = validarRango(to_string(optPais), 1, paises.size());
     cout << endl;
 
     //Se guarda el nombre del país seleccionado
@@ -252,7 +251,7 @@ int despliegueDestinos(){
     cout << endl;
     cout << "Ciudades disponibles en " << pais << ": " << endl;
     cout << "Ingrese el numero de la ciudad que desea visitar: ";
-    cin >> optFinal;
+    optFinal = validarRango(to_string(optFinal), 1, ciudadesDisponibles.size());
 
     //Se guarda el nombre de la ciudad
     counter = 0;
