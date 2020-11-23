@@ -83,13 +83,22 @@ void clientes()
     bool error = true;
 
     cout << endl;
+    cout<<"Bienvenido."<<endl;
+    cout << endl;
+    
+    cin.ignore();
+
+    string auxString = " ";
+
+    cout<<"-Ingrese el nombre del pasajero: ";       
+    unPasajero.nombre = validarString();
+
     do
     {
-        cout<<"Bienvenido. "<<endl;
-        cout<<"Numero de pasajeros a ingresar: ";
-        cin>>num;
+        cout<<"-Ingrese la edad del pasajero "<<cont+1<<": ";
+        cin>>unPasajero.edad;
 
-        if (cin.fail() || num < 0)
+        if (cin.fail() || unPasajero.edad < 1)
         {
             cin.clear();
             cin.ignore();
@@ -97,91 +106,62 @@ void clientes()
             cout << "Por favor ingresa un numero entero positivo, intentalo otra vez." << endl;
             cout << "----------------------------------------------------------------" << endl;
             cout << endl;
-        }
-        else
+        } 
+        else 
         {
             error = false;
         }
+            
     } while (error);
-    cout << endl;
 
-    cin.ignore();
-
-    while (cont<num)
+    cout<<"-Tiene alguna discapacidad? ";
+    bool opt2=true;
+        
+    while(opt2) //validacion de dato
     {
-        string auxString = " ";
-        bool error = true;
+        cout<<"(s/n): ";
+        cin>>unPasajero.discapacidad;
 
-        cout<<"-Ingrese el nombre del pasajero "<<cont+1<<": ";       
-        unPasajero.nombre = validarString();
-
-        do
+        if (unPasajero.discapacidad!='n' && unPasajero.discapacidad!='s')
         {
-            cout<<"-Ingrese la edad del pasajero "<<cont+1<<": ";
-            cin>>unPasajero.edad;
-
-            if (cin.fail() || unPasajero.edad < 1)
-            {
-                cin.clear();
-                cin.ignore();
-                cout << endl;
-                cout << "Por favor ingresa un numero entero positivo, intentalo otra vez." << endl;
-                cout << "----------------------------------------------------------------" << endl;
-                cout << endl;
-            } 
-            else 
-            {
-                error = false;
-            }
-            
-        } while (error);
-
-        cout<<"-Tiene alguna discapacidad? ";
-        bool opt2=true;
-        
-        while(opt2) //validacion de dato
-        {
-            cout<<"(s/n): ";
-            cin>>unPasajero.discapacidad;
-
-            if (unPasajero.discapacidad!='n' && unPasajero.discapacidad!='s')
-            {
-                cout<<"Opcion invalida. Intentelo de nuevo"<<endl;
-            }
-            else 
-            {
-                opt2=false;
-            } 
-            
+            cout<<"Opcion invalida. Intentelo de nuevo"<<endl;
         }
-
-        cout<< endl << "Continentes disponibles: "<<endl << endl;
-        
-        //Retorna la ruta con todos sus datos
-        rutaCliente = comenzarBusqueda(0, despliegueDestinos());
-
-        unPasajero.rutaVuelo=rutaCliente;
-        unPasajero.costoTotal = costoTotalFinal;
-        string destinoData = ciudades[unPasajero.rutaVuelo.pares.front().destino].ciudad;
-        cout << endl << "Costo total por ida y vuelta: $" << unPasajero.costoTotal << endl << endl;
-        destinos.insert(destinoData);
-
-        //cout << "Primer destino: " << ciudades[rutaCliente.pares.front().destino].ciudad << endl;
-        
-        cout<<"Redirigiendo al sistema de registro de maletas..."<<endl<<endl;
-        system("pause");
-        MenuMaletas();
-        cin.ignore();
-        
-        if (unPasajero.discapacidad=='s' || unPasajero.edad>65) //validacion de lista de pertenencia
+        else 
         {
-            pasajerosDiscapacitados.push_back(unPasajero); //cola pasajeros discapacitados y adultos mayores
-        } else 
-        {
-            listaPasajeros.push_back(unPasajero); //cola pasajeros
+            opt2=false;
         } 
-        cont++;
+            
     }
+
+    cout<< endl << "Continentes disponibles: "<<endl << endl;
+        
+    //Retorna la ruta con todos sus datos
+    rutaCliente = comenzarBusqueda(0, despliegueDestinos());
+
+    unPasajero.rutaVuelo=rutaCliente;
+    unPasajero.costoTotal = costoTotalFinal;
+    string destinoData = ciudades[unPasajero.rutaVuelo.pares.front().destino].ciudad;
+    cout << endl << "Costo total por ida y vuelta: $" << unPasajero.costoTotal << endl << endl;
+    destinos.insert(destinoData);
+
+    //cout << "Primer destino: " << ciudades[rutaCliente.pares.front().destino].ciudad << endl;
+        
+    cout<<"Redirigiendo al sistema de registro de maletas..."<<endl<<endl;
+    system("pause");
+    MenuMaletas();
+    cin.ignore();
+        
+    if (unPasajero.discapacidad=='s' || unPasajero.edad>65) //validacion de lista de pertenencia
+    {
+        pasajerosDiscapacitados.push_back(unPasajero); //cola pasajeros discapacitados y adultos mayores
+    } 
+    
+    else 
+    {
+        listaPasajeros.push_back(unPasajero); //cola pasajeros
+    } 
+    cont++;
+    
 }
 
 int despliegueDestinos(){
