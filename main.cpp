@@ -31,7 +31,7 @@ ruta rutaCliente;
 int main()
 {
     mostrarLogo();
-    system("CLS");
+
     bool stop=true;
     int opt = 0;
     cout<<"Bienvenido"<<endl;
