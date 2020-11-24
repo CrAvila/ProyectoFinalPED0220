@@ -83,7 +83,7 @@ void agregaMaletas ()
 
 void mostraPila(stack<maleta> Pila){
     if(Pila.size()<1){
-        cout<< "Cola Vacia\n\n";
+        cout<< " Pila Vacia, no hay datos para mostrar. \n\n";
     }else{
         stack<maleta> Pila2;
         int canti = Pila.size(); 
