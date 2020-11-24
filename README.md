@@ -12,6 +12,8 @@
 
 - Gilberto Eduardo Campos Acevedo [00229220]
 
+- Andrea Eunice Rodríguez Juárez [00011020]
+
 - Samuel Enrique Vargas Echeverría [00037720]
 
 
@@ -27,7 +29,7 @@ Se ha creado un sistema de boletería simplificado para una aerolínea ficticia 
 
 El sistema posee las siguientes funcionalidades:
 
-- Calcula la mejor ruta desde San Salvador, El Salvador, hacia la ciudad que el pasajero desee viajar. Así mismo, se calcula la mejor ruta de regreso.
+- Calcula la mejor ruta desde San Salvador, El Salvador, hacia la ciudad que el pasajero desee viajar. Las rutas se calculan en base a los vuelos específicos que la aerolinea ofrece. Así mismo, se calcula la mejor ruta de regreso.
 
 - En caso que la aerolínea no ofrezca vuelos directos hacia esa localización, se toman en cuentas todas las escalas necesarias para llegar al destino. Al cliente se le carga monetariamente el costo total de cada boleto, incluyendo todas las escalas de sus viajes de ida y vuelta.
 
