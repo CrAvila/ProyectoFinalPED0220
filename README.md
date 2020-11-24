@@ -48,10 +48,9 @@ Las principales estructuras de datos que se han utilizado son:
 
 Se creó [este grafo](http://graphonline.ru/en/?graph=NPvTxAfWDBTwNwpb) ponderado y direccionado que conecta a todas las ciudades con las que la aerolínea tiene nexo. Cada vértice es una ciudad y cada arco es el vuelo que las conecta, el peso de cada arco es la cantidad promedio de minutos que tarda dicho viaje. Dicho peso se utiliza para calcular el costo de viaje. Se usó la matriz de adyacencia para obtener la lista de adyacencia y poder implementar el grafo en el sistema (desde cero) que calcula la mejor ruta en función del tiempo.
 
-#### Lista
+#### Arreglos Dinámicos
 
-Se crea una lista haciendo uso de la librería `<vector>` para guardar un registro de cada cliente que se atiende. Dicho registro contiene el información como nombre y edad del cliente, si es discapacitado o no, la ruta que seguirá y el costo total de ella.
-También es utilizada para crear una lista de las puertas de abordaje donde serán asignados los pasajeros por medio de su respectivo destino. 
+Se crean arreglos dinamicos usando la libreria `<vector>` para almacenar diferentes tipos de datos como por ejemplo para guardar los clientesy verificar si tienen alguna discapacidad o no, para registrar las maletas de los clientes y para iniciar el abordaje de los pasajeros. 
 
 #### Pilas 
 
