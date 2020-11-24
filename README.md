@@ -19,11 +19,11 @@
 
 ### Everywhere Airlines
 
-![Logo](https://github.com/00032420/ProyectoFinalPED0220/blob/master/images/mapa.jpg)
+![Logo](https://github.com/00032420/ProyectoFinalPED0220/blob/master/images/logo.jpg)
 
 Se ha creado un sistema de boletería simplificado para una aerolínea ficticia que tiene nexos con 60 ciudades alrededor del munddo, las cuales se pueden visualizar en este mapa: 
 
-![Mapa](https://github.com/00032420/ProyectoFinalPED0220/blob/master/images/logo.jpg)
+![Mapa](https://github.com/00032420/ProyectoFinalPED0220/blob/master/images/mapa.jpg)
 
 El sistema posee las siguientes funcionalidades:
 
