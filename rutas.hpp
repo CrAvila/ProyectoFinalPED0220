@@ -84,7 +84,7 @@ destino ciudades[60] = {
         {"Munich",              "Alemania",               "Europa"},
         {"San Jose",            "Costa Rica",             "America"},
         {"Copenhage",           "Dinamarca",              "Europa"},
-        {"Guayaquil",           "Ecuador",                "Europa"},
+        {"Guayaquil",           "Ecuador",                "America"},
         {"Londres",             "Inglaterra",             "Europa"},
         {"Atenas",              "Grecia",                 "Europa"},
         {"Tegucigalpa",         "Honduras",               "America"},
