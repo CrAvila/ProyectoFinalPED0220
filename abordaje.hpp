@@ -30,7 +30,7 @@ void Abordar_pasajeros(puerta, vector <cliente>, vector <cliente>);
 //Funciones ejecutadas directamente por el menu 
 void Crear_puerta(vector <cliente> pasajeros , vector <cliente> pasajerosDiscapacitados){
     if (pasajeros.empty() && pasajerosDiscapacitados.empty()){
-        cout<<"\nNo hay ningun clientes para abordar\n\n";
+        cout<<"\nNo hay ningun cliente para abordar\n\n";
     }
     else{
         cliente uncl;//un cliente
