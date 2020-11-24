@@ -2,9 +2,8 @@
 #pragma once
 #include <iostream>
 #include <vector>
-#include <queue>
 #include "rutas.hpp"
-#include <string>
+#include "validaciones.hpp"
 
 using namespace std;
 
@@ -31,7 +30,7 @@ void Abordar_pasajeros(puerta, vector <cliente>, vector <cliente>);
 //Funciones ejecutadas directamente por el menu 
 void Crear_puerta(vector <cliente> pasajeros , vector <cliente> pasajerosDiscapacitados){
     cliente uncl;//un cliente
-    int n = 1;//contador
+    int n = 1, o = 0;//contador y opcion 
     //variable donde se guardara el nombre del destino
     puerta unapuerta;
 
@@ -51,11 +50,23 @@ void Crear_puerta(vector <cliente> pasajeros , vector <cliente> pasajerosDiscapa
         puertas.push_back(unapuerta);
         }
     }
-
+    bool c = true;
+    do
+    {
     //debe ingresar uno de los destinos previamente mostrados
     cout<<endl<<"Ingrese el Numero de la puerta del vuelo que desea abordar:"<<endl;
-    cin>>n;cin.ignore();
-    Abordar_pasajeros(puertas[n-1], pasajeros, pasajerosDiscapacitados);//pasa el destino y las listas a la funcion 
+    cin>>o;cin.ignore();
+    if ( o < 0 || o > n-1 ){
+            cout << endl;
+            cout << "Por favor intentalo otra vez." << endl;
+            cout << endl;
+        } 
+    else {
+            c = false;
+        }
+    }
+    while (c);
+    Abordar_pasajeros(puertas[o-1], pasajeros, pasajerosDiscapacitados);//pasa el destino y las listas a la funcion 
 }
 
 void Abordar_pasajeros(puerta unap, vector <cliente> pasajeros , vector <cliente> pasajerosDiscapacitados){
