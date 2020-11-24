@@ -23,7 +23,7 @@
 
 ![Logo](https://github.com/00032420/ProyectoFinalPED0220/blob/master/images/logo.jpg)
 
-Se ha creado un sistema de boletería simplificado para una aerolínea ficticia que tiene nexos con 60 ciudades alrededor del munddo, las cuales se pueden visualizar en este mapa: 
+Se ha creado un sistema de boletería simplificado para una aerolínea ficticia que tiene nexos con 60 ciudades alrededor del mundo, las cuales se pueden visualizar en este mapa: 
 
 ![Mapa](https://github.com/00032420/ProyectoFinalPED0220/blob/master/images/mapa.jpg)
 
@@ -51,6 +51,7 @@ Se creó [este grafo](http://graphonline.ru/en/?graph=NPvTxAfWDBTwNwpb) ponderad
 #### Lista
 
 Se crea una lista haciendo uso de la librería `<vector>` para guardar un registro de cada cliente que se atiende. Dicho registro contiene el información como nombre y edad del cliente, si es discapacitado o no, la ruta que seguirá y el costo total de ella.
+También es utilizada para crear una lista de las puertas de abordaje donde serán asignados los pasajeros por medio de su respectivo destino. 
 
 #### Pilas 
 
