@@ -357,23 +357,17 @@ void buscarCaminos(int u, int d, bool visited[], int path[], int& path_index, ru
 
                     }
 
-                    //counter += matrix[path[i]][path[i+1]];
-                    //cout << ciudades[path[i]]->ciudad <<  " -> "  << ciudades[path[i+1]]->ciudad << "  - $" << matrix[path[i]][path[i+1]];
                     par unPar;
                     unPar.origen = path[i];
                     unPar.destino = path[i+1];
                     unPar.peso = pesoTemp;
                     r->pares.push(unPar);
                 }
-            //cout << ciudades[path[i]]->ciudad << endl;
-            //cout << endl;
             }
 
 
-        //cout << " Peso Total del Viaje: " << counter << endl;
-        r->peso = counter;
+         r->peso = counter;
         counter = 0;
-        //cout << endl;
         rutas.push(*r);
         while(!r->pares.empty()){
             r->pares.pop();

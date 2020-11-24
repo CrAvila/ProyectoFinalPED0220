@@ -92,7 +92,7 @@ void mostraPila(stack<maleta> Pila){
            Pila.pop();
        }
        for(int i = 0; i < canti; i++){
-           cout << "Cliente #"<< (i+1)<< ":\n Cantidad de maletas: " << (Pila2.top()).cantidad << endl;
+           cout << "Pila de maletas #"<< (i+1)<< ":\n Cantidad de maletas: " << (Pila2.top()).cantidad << endl;
            for (size_t i = 0; i < (Pila2.top()).cantidad; i++)
            {
                cout << "       Maleta #" << (i+1) << ": " << (Pila2.top()).peso[i] <<" libras"<< "\n";
