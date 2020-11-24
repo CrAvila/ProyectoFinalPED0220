@@ -6,13 +6,13 @@
 
 ## Integrantes 
 
-- Carlos Roberto Ávila Hernandez [00032420]
+- Carlos Roberto Ávila Hernandez   [00032420]
  
-- Ernesto Briceño Magaña [00025620]
+- Ernesto Briceño Magaña           [00025620]
 
-- Gilberto Eduardo Campos Acevedo [00229220]
-
-- Andrea Eunice Rodríguez Juárez [00011020]
+- Gilberto Eduardo Campos Acevedo  [00229220]
+ 
+- Andrea Eunice Rodríguez Juárez   [00011020]
 
 - Samuel Enrique Vargas Echeverría [00037720]
 
@@ -58,4 +58,4 @@ Si el cliente ingresa los datos de su equipaje estos se llevan en una pila hacie
 
 #### Colas
 
-Por medio de la librería `<queue>` se crean colas con los pasajeros que abordarán cada vuelo por medio de su respectiva puerta. Para este inciso solo interesa el primer destino, puesto cada ciudad lo gestionará de manera independiente. Se cada puerta está asociada a una cola de pasajeros prioritarios y a otra cola de pasajeros corrientes.
+Por medio de la librería `<queue>` se crean colas que almacenan todas las posibles rutas que hay disponibles desde un destino a otro. Posteriormente se comparan para sacar la más óptima tanto de ida como de vuelta y se almacenan en el registro del cliente.
