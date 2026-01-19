@@ -39,6 +39,9 @@ const sessions = new Map();
 // Express app setup
 const app = express();
 
+// Trust proxy (for rate limiting behind Nginx/reverse proxy)
+app.set('trust proxy', 1);
+
 // Security middleware
 app.use(helmet({
     contentSecurityPolicy: {
