@@ -68,8 +68,11 @@ const httpLimiter = rateLimit({
 
 app.use(httpLimiter);
 
-// Serve static files
-app.use(express.static(path.join(__dirname, '../public'), {
+// Serve static files (handle both Docker and local dev paths)
+const publicPath = process.env.NODE_ENV === 'production'
+    ? path.join(__dirname, 'public')      // Docker: /app/public
+    : path.join(__dirname, '../public');  // Local: deploy/public
+app.use(express.static(publicPath, {
     maxAge: '1h',
     etag: true,
 }));
