@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Everywhere Airlines - Flight Reservation System | PED Final Project - UCA">
+    <meta name="author" content="CrAvila">
+    <meta name="theme-color" content="#0f172a">
+    <title>Everywhere Airlines | PED - UCA</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/xterm@5.3.0/css/xterm.css">
+    <script src="https://cdn.jsdelivr.net/npm/xterm@5.3.0/lib/xterm.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/xterm-addon-fit@0.8.0/lib/xterm-addon-fit.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/xterm-addon-web-links@0.9.0/lib/xterm-addon-web-links.min.js"></script>
+    <style>
+        :root {
+            --cpp-primary: #00599C;
+            --cpp-secondary: #004482;
+            --cpp-accent: #659AD2;
+            --bg-primary: #0a0f1a;
+            --bg-secondary: #0f172a;
+            --bg-tertiary: #1e293b;
+            --bg-card: #131c2e;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --border-color: #1e3a5f;
+            --term-bg: #0d1117;
+            --success: #22c55e;
+            --warning: #eab308;
+            --error: #ef4444;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        /* Global scrollbar theming */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-primary); }
+        ::-webkit-scrollbar-thumb { background: var(--border-color); }
+        ::-webkit-scrollbar-thumb:hover { background: var(--cpp-primary); }
+        * { scrollbar-width: thin; scrollbar-color: var(--border-color) var(--bg-primary); }
+
+        html, body {
+            height: 100%;
+            overflow: hidden;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.5;
+        }
+
+        .app {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.5rem 1rem;
+            background: var(--bg-card);
+            border-bottom: 1px solid var(--border-color);
+            flex-shrink: 0;
+        }
+
+        .logo-section { display: flex; align-items: center; gap: 0.75rem; }
+
+        .cpp-icon {
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--cpp-primary), var(--cpp-secondary));
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+            font-size: 0.8rem;
+            color: white;
+        }
+
+        .logo-text { display: flex; flex-direction: column; }
+        .logo-title { font-size: 1rem; font-weight: 600; }
+        .logo-subtitle { font-size: 0.65rem; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; }
+
+        .header-actions { display: flex; align-items: center; gap: 0.75rem; }
+
+        .status-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.3rem 0.6rem;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            font-size: 0.65rem;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .status-dot { width: 6px; height: 6px; background: var(--text-muted); }
+        .status-dot.connected { background: var(--success); }
+        .status-dot.disconnected { background: var(--error); }
+        .status-dot.connecting { background: var(--warning); }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.4rem 0.8rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+            font-family: inherit;
+            border: none;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--cpp-primary), var(--cpp-secondary));
+            color: white;
+        }
+        .btn-primary:hover { filter: brightness(1.1); }
+        .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            display: flex;
+            overflow: hidden;
+            min-height: 0;
+        }
+
+        /* Terminal Section */
+        .terminal-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+            overflow: hidden;
+        }
+
+        .terminal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.4rem 0.75rem;
+            background: var(--bg-tertiary);
+            border-bottom: 1px solid var(--border-color);
+            flex-shrink: 0;
+        }
+
+        .terminal-tab {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.3rem 0.6rem;
+            background: var(--cpp-primary);
+            font-size: 0.7rem;
+            font-family: 'JetBrains Mono', monospace;
+            color: white;
+        }
+        .terminal-tab svg { width: 10px; height: 10px; }
+
+        .control-btn {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+        .control-btn:hover { background: var(--cpp-primary); color: white; border-color: var(--cpp-primary); }
+        .control-btn svg { width: 11px; height: 11px; }
+
+        .terminal-wrapper {
+            flex: 1;
+            background: var(--term-bg);
+            position: relative;
+            overflow: hidden;
+        }
+
+        #terminal { height: 100%; width: 100%; }
+
+        .terminal-overlay {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: rgba(13, 17, 23, 0.95);
+            z-index: 10;
+            gap: 0.75rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+        }
+        .terminal-overlay.visible { opacity: 1; visibility: visible; }
+
+        .overlay-icon {
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--cpp-primary), var(--cpp-secondary));
+        }
+        .overlay-icon svg { width: 24px; height: 24px; color: white; }
+        .overlay-text { text-align: center; }
+        .overlay-title { font-size: 1rem; font-weight: 600; margin-bottom: 0.2rem; }
+        .overlay-subtitle { font-size: 0.75rem; color: var(--text-muted); }
+
+        .spinner {
+            width: 18px;
+            height: 18px;
+            border: 2px solid var(--border-color);
+            border-top-color: var(--cpp-accent);
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* Info Panel */
+        .info-panel {
+            width: 280px;
+            flex-shrink: 0;
+            background: var(--bg-card);
+            border-left: 1px solid var(--border-color);
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .info-header {
+            padding: 0.6rem 0.75rem;
+            background: var(--bg-tertiary);
+            border-bottom: 1px solid var(--border-color);
+            flex-shrink: 0;
+        }
+
+        .info-header-title {
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        .info-header-title svg { width: 14px; height: 14px; color: var(--cpp-accent); }
+
+        .info-content { flex: 1; padding: 0.75rem; overflow-y: auto; }
+
+        .info-section {
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .info-section:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+
+        .info-section-title {
+            font-size: 0.6rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--cpp-accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .info-project-name {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.3rem;
+        }
+
+        .info-description {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .info-course-title {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.15rem;
+        }
+
+        .info-course-full {
+            font-size: 0.7rem;
+            color: var(--cpp-accent);
+            font-style: italic;
+            margin-bottom: 0.15rem;
+        }
+
+        .info-course-meta {
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            margin-top: 0.3rem;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.4rem;
+        }
+
+        .info-stat {
+            padding: 0.5rem;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+        }
+
+        .info-stat-value {
+            font-size: 0.95rem;
+            font-weight: 700;
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--cpp-accent);
+        }
+
+        .info-stat-label {
+            font-size: 0.55rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .info-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.3rem;
+        }
+
+        .info-tag {
+            padding: 0.2rem 0.4rem;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            font-size: 0.6rem;
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--text-secondary);
+        }
+
+        .info-algo {
+            padding: 0.5rem;
+            background: var(--bg-tertiary);
+            border-left: 2px solid var(--cpp-primary);
+        }
+
+        .info-algo-name {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.2rem;
+        }
+
+        .info-algo-desc {
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        .info-link {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.5rem;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            color: var(--cpp-accent);
+            text-decoration: none;
+            font-size: 0.65rem;
+            font-family: 'JetBrains Mono', monospace;
+            transition: all 0.15s;
+        }
+        .info-link:hover { background: var(--cpp-primary); color: white; border-color: var(--cpp-primary); }
+        .info-link svg { width: 12px; height: 12px; flex-shrink: 0; }
+
+        /* Footer */
+        .footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.4rem 0.75rem;
+            background: var(--bg-card);
+            border-top: 1px solid var(--border-color);
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            flex-shrink: 0;
+        }
+
+        .footer-links { display: flex; gap: 0.75rem; }
+
+        .footer-link {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.15s;
+        }
+        .footer-link:hover { color: var(--cpp-accent); }
+        .footer-link svg { width: 11px; height: 11px; }
+
+        .footer-tech {
+            display: flex;
+            gap: 0.4rem;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .tech-badge {
+            padding: 0.15rem 0.35rem;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            font-size: 0.6rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .info-panel { display: none; }
+        }
+
+        .xterm { height: 100% !important; }
+        .xterm-viewport::-webkit-scrollbar { width: 8px; }
+        .xterm-viewport::-webkit-scrollbar-track { background: var(--term-bg); }
+        .xterm-viewport::-webkit-scrollbar-thumb { background: var(--border-color); }
+        .xterm-viewport::-webkit-scrollbar-thumb:hover { background: var(--cpp-primary); }
+    </style>
+</head>
+<body>
+    <div class="app">
+        <header class="header">
+            <div class="logo-section">
+                <div class="cpp-icon">C++</div>
+                <div class="logo-text">
+                    <span class="logo-title">Everywhere Airlines</span>
+                    <span class="logo-subtitle">PED // UCA 02-2020</span>
+                </div>
+            </div>
+            <div class="header-actions">
+                <div class="status-badge">
+                    <div class="status-dot" id="statusDot"></div>
+                    <span id="statusText">Connecting...</span>
+                </div>
+                <button class="btn btn-primary" id="restartBtn" disabled>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 2v6h-6"></path>
+                        <path d="M3 12a9 9 0 0 1 15-6.7L21 8"></path>
+                        <path d="M3 22v-6h6"></path>
+                        <path d="M21 12a9 9 0 0 1-15 6.7L3 16"></path>
+                    </svg>
+                    Restart
+                </button>
+            </div>
+        </header>
+
+        <div class="main-content">
+            <section class="terminal-section">
+                <div class="terminal-header">
+                    <div class="terminal-tab">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="4 17 10 11 4 5"></polyline>
+                            <line x1="12" y1="19" x2="20" y2="19"></line>
+                        </svg>
+                        airlines
+                    </div>
+                    <button class="control-btn" id="fullscreenBtn" title="Fullscreen">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="15 3 21 3 21 9"></polyline>
+                            <polyline points="9 21 3 21 3 15"></polyline>
+                            <line x1="21" y1="3" x2="14" y2="10"></line>
+                            <line x1="3" y1="21" x2="10" y2="14"></line>
+                        </svg>
+                    </button>
+                </div>
+                <div class="terminal-wrapper">
+                    <div id="terminal"></div>
+                    <div class="terminal-overlay" id="overlay">
+                        <div class="overlay-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="4 17 10 11 4 5"></polyline>
+                                <line x1="12" y1="19" x2="20" y2="19"></line>
+                            </svg>
+                        </div>
+                        <div class="overlay-text">
+                            <div class="overlay-title" id="overlayTitle">Connecting...</div>
+                            <div class="overlay-subtitle" id="overlaySubtitle">Establishing connection</div>
+                        </div>
+                        <div class="spinner" id="overlaySpinner"></div>
+                    </div>
+                </div>
+            </section>
+
+            <aside class="info-panel" id="infoPanel">
+                <div class="info-header">
+                    <div class="info-header-title">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="12" y1="16" x2="12" y2="12"></line>
+                            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                        </svg>
+                        Project Info
+                    </div>
+                </div>
+                <div class="info-content">
+                    <div class="info-section">
+                        <div class="info-section-title">Proyecto</div>
+                        <div class="info-project-name">Everywhere Airlines</div>
+                        <p class="info-description">
+                            Flight reservation system using graph theory for optimal route calculation between 60 cities worldwide.
+                        </p>
+                    </div>
+
+                    <div class="info-section">
+                        <div class="info-section-title">Curso</div>
+                        <div class="info-course-title">PED</div>
+                        <div class="info-course-full">Programacion de Estructuras Dinamicas</div>
+                        <div class="info-course-full" style="color: var(--text-muted); font-style: normal;">(Dynamic Data Structures Programming)</div>
+                        <div class="info-course-meta">Ciclo 02/2020 &bull; UCA &bull; El Salvador</div>
+                    </div>
+
+                    <div class="info-section">
+                        <div class="info-section-title">Grafo</div>
+                        <div class="info-grid">
+                            <div class="info-stat">
+                                <div class="info-stat-value">60</div>
+                                <div class="info-stat-label">Ciudades</div>
+                            </div>
+                            <div class="info-stat">
+                                <div class="info-stat-value">114</div>
+                                <div class="info-stat-label">Vuelos</div>
+                            </div>
+                            <div class="info-stat">
+                                <div class="info-stat-value">5</div>
+                                <div class="info-stat-label">Continentes</div>
+                            </div>
+                            <div class="info-stat">
+                                <div class="info-stat-value">C++11</div>
+                                <div class="info-stat-label">Lenguaje</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="info-section">
+                        <div class="info-section-title">Algoritmo</div>
+                        <div class="info-algo">
+                            <div class="info-algo-name">DFS Pathfinding</div>
+                            <div class="info-algo-desc">
+                                Depth-First Search con lista de adyacencia para busqueda de rutas optimas.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="info-section">
+                        <div class="info-section-title">Estructuras</div>
+                        <div class="info-tags">
+                            <span class="info-tag">vector</span>
+                            <span class="info-tag">stack</span>
+                            <span class="info-tag">queue</span>
+                            <span class="info-tag">list</span>
+                            <span class="info-tag">set</span>
+                            <span class="info-tag">graph</span>
+                        </div>
+                    </div>
+
+                    <div class="info-section">
+                        <div class="info-section-title">Source</div>
+                        <a href="https://github.com/CrAvila/ProyectoFinalPED0220" target="_blank" rel="noopener noreferrer" class="info-link">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                            </svg>
+                            CrAvila/ProyectoFinalPED0220
+                        </a>
+                    </div>
+                </div>
+            </aside>
+        </div>
+
+        <footer class="footer">
+            <div class="footer-links">
+                <a href="https://cravila.me" target="_blank" rel="noopener noreferrer" class="footer-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                    </svg>
+                    Portfolio
+                </a>
+                <a href="https://github.com/CrAvila" target="_blank" rel="noopener noreferrer" class="footer-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                    </svg>
+                    GitHub
+                </a>
+            </div>
+            <div class="footer-tech">
+                <span class="tech-badge">C++11</span>
+                <span class="tech-badge">Node.js</span>
+                <span class="tech-badge">xterm.js</span>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        class AirlinesTerminal {
+            constructor() {
+                this.terminal = null;
+                this.fitAddon = null;
+                this.socket = null;
+                this.reconnectAttempts = 0;
+                this.maxReconnectAttempts = 5;
+                this.reconnectDelay = 1000;
+
+                this.elements = {
+                    statusDot: document.getElementById('statusDot'),
+                    statusText: document.getElementById('statusText'),
+                    restartBtn: document.getElementById('restartBtn'),
+                    overlay: document.getElementById('overlay'),
+                    overlayTitle: document.getElementById('overlayTitle'),
+                    overlaySubtitle: document.getElementById('overlaySubtitle'),
+                    overlaySpinner: document.getElementById('overlaySpinner'),
+                    fullscreenBtn: document.getElementById('fullscreenBtn'),
+                };
+
+                this.init();
+            }
+
+            init() {
+                this.initTerminal();
+                this.connect();
+                this.bindEvents();
+            }
+
+            initTerminal() {
+                this.terminal = new Terminal({
+                    fontFamily: '"JetBrains Mono", monospace',
+                    fontSize: 13,
+                    lineHeight: 1.3,
+                    cursorBlink: true,
+                    cursorStyle: 'block',
+                    theme: {
+                        background: '#0d1117',
+                        foreground: '#e6edf3',
+                        cursor: '#58a6ff',
+                        cursorAccent: '#0d1117',
+                        selectionBackground: 'rgba(88,166,255,0.3)',
+                        black: '#484f58',
+                        red: '#ff7b72',
+                        green: '#3fb950',
+                        yellow: '#d29922',
+                        blue: '#58a6ff',
+                        magenta: '#bc8cff',
+                        cyan: '#39c5cf',
+                        white: '#b1bac4',
+                        brightBlack: '#6e7681',
+                        brightRed: '#ffa198',
+                        brightGreen: '#56d364',
+                        brightYellow: '#e3b341',
+                        brightBlue: '#79c0ff',
+                        brightMagenta: '#d2a8ff',
+                        brightCyan: '#56d4dd',
+                        brightWhite: '#f0f6fc',
+                    },
+                    scrollback: 2000,
+                    convertEol: true,
+                });
+
+                this.fitAddon = new FitAddon.FitAddon();
+                this.terminal.loadAddon(this.fitAddon);
+                this.terminal.loadAddon(new WebLinksAddon.WebLinksAddon());
+                this.terminal.open(document.getElementById('terminal'));
+
+                setTimeout(() => this.fitAddon.fit(), 100);
+
+                this.terminal.onData((data) => {
+                    if (this.socket?.readyState === WebSocket.OPEN) {
+                        this.socket.send(JSON.stringify({ type: 'input', data }));
+                    }
+                });
+
+                window.addEventListener('resize', () => {
+                    setTimeout(() => this.handleResize(), 50);
+                });
+            }
+
+            handleResize() {
+                if (this.fitAddon) {
+                    this.fitAddon.fit();
+                    if (this.socket?.readyState === WebSocket.OPEN) {
+                        this.socket.send(JSON.stringify({
+                            type: 'resize',
+                            cols: this.terminal.cols,
+                            rows: this.terminal.rows,
+                        }));
+                    }
+                }
+            }
+
+            connect() {
+                this.updateStatus('connecting', 'Connecting...');
+                this.showOverlay('Connecting...', 'Establishing connection', true);
+
+                const protocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+                this.socket = new WebSocket(`${protocol}//${location.host}/terminal`);
+
+                this.socket.onopen = () => { this.reconnectAttempts = 0; };
+
+                this.socket.onmessage = (e) => {
+                    try { this.handleMessage(JSON.parse(e.data)); }
+                    catch (err) { console.error('Parse error:', err); }
+                };
+
+                this.socket.onclose = (e) => {
+                    this.updateStatus('disconnected', 'Disconnected');
+                    if (this.reconnectAttempts < this.maxReconnectAttempts && e.code !== 4030) {
+                        this.reconnectAttempts++;
+                        const delay = this.reconnectDelay * Math.pow(2, this.reconnectAttempts - 1);
+                        this.showOverlay('Reconnecting...', `Attempt ${this.reconnectAttempts}/${this.maxReconnectAttempts}`, true);
+                        setTimeout(() => this.connect(), delay);
+                    } else {
+                        this.showOverlay('Disconnected', 'Click Restart', false);
+                        this.elements.restartBtn.disabled = false;
+                    }
+                };
+            }
+
+            handleMessage(msg) {
+                switch (msg.type) {
+                    case 'connected':
+                        this.updateStatus('connected', 'Connected');
+                        this.hideOverlay();
+                        this.elements.restartBtn.disabled = false;
+                        this.terminal.focus();
+                        setTimeout(() => this.handleResize(), 100);
+                        break;
+                    case 'output':
+                        // Hide overlay and enable button when we receive output
+                        this.hideOverlay();
+                        this.elements.restartBtn.disabled = false;
+                        this.updateStatus('connected', 'Connected');
+                        this.terminal.write(msg.data);
+                        break;
+                    case 'restarted':
+                        // Full terminal reset for clean restart
+                        this.terminal.reset();
+                        this.updateStatus('connected', 'Connected');
+                        this.hideOverlay();
+                        this.elements.restartBtn.disabled = false;
+                        this.terminal.focus();
+                        setTimeout(() => this.handleResize(), 100);
+                        break;
+                    case 'exit':
+                        this.terminal.write(msg.message);
+                        this.elements.restartBtn.disabled = false;
+                        break;
+                    case 'timeout':
+                        this.terminal.write(msg.message);
+                        this.updateStatus('disconnected', 'Timeout');
+                        break;
+                }
+            }
+
+            updateStatus(status, text) {
+                this.elements.statusDot.className = 'status-dot ' + status;
+                this.elements.statusText.textContent = text;
+            }
+
+            showOverlay(title, subtitle, spinner) {
+                this.elements.overlayTitle.textContent = title;
+                this.elements.overlaySubtitle.textContent = subtitle;
+                this.elements.overlaySpinner.style.display = spinner ? 'block' : 'none';
+                this.elements.overlay.classList.add('visible');
+            }
+
+            hideOverlay() { this.elements.overlay.classList.remove('visible'); }
+
+            restart() {
+                this.elements.restartBtn.disabled = true;
+                // Full reset: clear all content and scrollback
+                this.terminal.reset();
+                this.showOverlay('Restarting...', 'Starting fresh session', true);
+                if (this.socket?.readyState === WebSocket.OPEN) {
+                    this.socket.send(JSON.stringify({ type: 'restart' }));
+                    this.updateStatus('connecting', 'Restarting...');
+                } else {
+                    this.reconnectAttempts = 0;
+                    this.connect();
+                }
+            }
+
+            bindEvents() {
+                this.elements.restartBtn.addEventListener('click', () => this.restart());
+                this.elements.fullscreenBtn.addEventListener('click', () => {
+                    document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen();
+                });
+                document.querySelector('.terminal-wrapper').addEventListener('click', () => this.terminal.focus());
+                setInterval(() => {
+                    if (this.socket?.readyState === WebSocket.OPEN) {
+                        this.socket.send(JSON.stringify({ type: 'ping' }));
+                    }
+                }, 25000);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => new AirlinesTerminal());
+    </script>
+</body>
+</html>

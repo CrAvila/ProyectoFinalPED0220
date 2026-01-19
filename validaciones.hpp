@@ -337,6 +337,8 @@ int validarRango(const string& /* placeholder */, int min, int max) {
             continue;
         }
 
+        // Clear remaining newline from buffer before returning
+        limpiarBuffer();
         return resultado;
     }
 }

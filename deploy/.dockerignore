@@ -1,0 +1,37 @@
+# Git
+.git
+.gitignore
+
+# IDE
+.idea
+.vscode
+*.swp
+*.swo
+
+# Documentation
+*.md
+*.pdf
+Manual De Usuario
+
+# Images (not needed for deployment)
+images
+
+# Temporary files
+tempCodeRunnerFile.cpp
+*.o
+*.exe
+*.out
+
+# Node
+node_modules
+npm-debug.log
+yarn-error.log
+
+# Docker
+Dockerfile*
+docker-compose*
+.dockerignore
+
+# OS files
+.DS_Store
+Thumbs.db

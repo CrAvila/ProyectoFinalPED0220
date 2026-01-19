@@ -151,7 +151,7 @@ int main() {
                 continuar = false;
                 cout << "\n";
                 cout << GREEN << BOLD << "╔═══════════════════════════════════════════════════════════════╗" << RESET << "\n";
-                cout << GREEN << BOLD << "║" << WHITE << "     Gracias por usar Everywhere Airlines. Buen viaje!        " << GREEN << "║" << RESET << "\n";
+                cout << GREEN << BOLD << "║" << WHITE << "     Gracias por usar Everywhere Airlines. Buen viaje!         " << GREEN << "║" << RESET << "\n";
                 cout << GREEN << BOLD << "╚═══════════════════════════════════════════════════════════════╝" << RESET << "\n\n";
                 break;
 
@@ -173,13 +173,13 @@ void mostrarMenuPrincipal() {
 
     cout << "\n";
     cout << CYAN << BOLD << "╔═══════════════════════════════════════════════════════════════╗" << RESET << "\n";
-    cout << CYAN << BOLD << "║" << WHITE << "                    M E N U   P R I N C I P A L               " << CYAN << "║" << RESET << "\n";
+    cout << CYAN << BOLD << "║" << WHITE << "                    M E N U   P R I N C I P A L                " << CYAN << "║" << RESET << "\n";
     cout << CYAN << BOLD << "╠═══════════════════════════════════════════════════════════════╣" << RESET << "\n";
     cout << CYAN << BOLD << "║" << RESET << "                                                               " << CYAN << BOLD << "║" << RESET << "\n";
-    cout << CYAN << BOLD << "║" << RESET << "   " << GREEN << "1." << RESET << " Registrar nuevo pasajero                              " << CYAN << BOLD << "║" << RESET << "\n";
-    cout << CYAN << BOLD << "║" << RESET << "   " << GREEN << "2." << RESET << " Ver ganancias totales                                 " << CYAN << BOLD << "║" << RESET << "\n";
-    cout << CYAN << BOLD << "║" << RESET << "   " << GREEN << "3." << RESET << " Iniciar proceso de abordaje                          " << CYAN << BOLD << "║" << RESET << "\n";
-    cout << CYAN << BOLD << "║" << RESET << "   " << GREEN << "4." << RESET << " Salir del sistema                                    " << CYAN << BOLD << "║" << RESET << "\n";
+    cout << CYAN << BOLD << "║" << RESET << "   " << GREEN << "1." << RESET << " Registrar nuevo pasajero                                 " << CYAN << BOLD << "║" << RESET << "\n";
+    cout << CYAN << BOLD << "║" << RESET << "   " << GREEN << "2." << RESET << " Ver ganancias totales                                    " << CYAN << BOLD << "║" << RESET << "\n";
+    cout << CYAN << BOLD << "║" << RESET << "   " << GREEN << "3." << RESET << " Iniciar proceso de abordaje                             " << CYAN << BOLD << "║" << RESET << "\n";
+    cout << CYAN << BOLD << "║" << RESET << "   " << GREEN << "4." << RESET << " Salir del sistema                                       " << CYAN << BOLD << "║" << RESET << "\n";
     cout << CYAN << BOLD << "║" << RESET << "                                                               " << CYAN << BOLD << "║" << RESET << "\n";
     cout << CYAN << BOLD << "╚═══════════════════════════════════════════════════════════════╝" << RESET << "\n";
 

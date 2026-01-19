@@ -1,0 +1,80 @@
+# ============================================================================
+# Everywhere Airlines - Docker Compose Configuration
+# ============================================================================
+# Deployment: ped.cravila.me via Nginx Proxy Manager
+# Network: External "proxy" network
+# ============================================================================
+
+services:
+  airlines-terminal:
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile
+    container_name: airlines-terminal
+    restart: unless-stopped
+
+    # Environment Configuration
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - BINARY_PATH=/app/airlines
+      - MAX_SESSIONS=50
+      - SESSION_TIMEOUT=600000
+      - ALLOWED_ORIGINS=https://ped.cravila.me,https://cravila.me
+
+    # Resource Limits (Security & Stability)
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 512M
+        reservations:
+          cpus: '0.25'
+          memory: 128M
+
+    # Security Options
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+      - SETUID
+      - SETGID
+
+    # Read-only root filesystem (with tmpfs for /tmp)
+    read_only: true
+    tmpfs:
+      - /tmp:size=64M,mode=1777
+
+    # Health Check
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+    # Network Configuration
+    networks:
+      - proxy
+    expose:
+      - "3000"
+
+    # Labels for Nginx Proxy Manager / Traefik (optional)
+    labels:
+      - "com.docker.compose.project=airlines-terminal"
+      - "app.name=Everywhere Airlines Terminal"
+      - "app.domain=ped.cravila.me"
+
+    # Logging Configuration
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+# External Network (Nginx Proxy Manager)
+networks:
+  proxy:
+    external: true

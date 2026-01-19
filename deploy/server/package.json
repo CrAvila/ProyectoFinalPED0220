@@ -1,0 +1,31 @@
+{
+  "name": "everywhere-airlines-terminal",
+  "version": "1.0.0",
+  "description": "Secure web terminal for Everywhere Airlines C++ application",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "keywords": [
+    "terminal",
+    "websocket",
+    "cpp",
+    "airlines"
+  ],
+  "author": "cravila",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "express-rate-limit": "^7.1.5",
+    "helmet": "^7.1.0",
+    "node-pty": "^1.0.0",
+    "ws": "^8.14.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

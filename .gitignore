@@ -30,3 +30,21 @@
 *.exe
 *.out
 *.app
+
+# Node.js
+node_modules/
+npm-debug.log*
+
+# Deploy artifacts (built in Docker)
+deploy/airlines
+deploy/server/node_modules/
+
+# IDE
+.idea/
+*.swp
+*.swo
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
